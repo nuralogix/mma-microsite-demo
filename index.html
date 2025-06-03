@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anura Magic Mirror by NuraLogix</title>
+    <script src="js/vendor/float16.min.js"></script>
+    <script>
+        const {
+            Float16Array, isFloat16Array, isTypedArray,
+            getFloat16, setFloat16,
+            f16round,
+        } = float16;
+    </script>
+    <script src="js/data.js"></script>
+    <script src="js/results-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: "Work Sans", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #5ba5ff;
+        }
+
+        .top-graphic {
+            background: url('assets/imgs/mma-logo.png') no-repeat center center;
+            background-size: contain;
+            height: 300px;
+            margin-left: 2em;
+            margin-right: 2em;
+            margin-bottom: 2em;
+            margin-top: 2em;
+        }
+
+        .result {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            position: relative;
+            font-size: 1.1em;
+            /* Needed for pseudo element */
+        }
+
+        /* Adding line under each result */
+        .result:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-icon {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+            background: no-repeat center center;
+            background-size: contain;
+            background-color: #023676;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+
+        .result-name {
+            margin-right: 10px;
+        }
+
+        .result-value {
+            margin-left: auto;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .result-unit {
+            margin-left: 0.4em;
+            font-size: 0.9em;
+            color: #333333;
+        }
+
+        h2 {
+            position: relative;
+            padding-bottom: 5px;
+            color: #023676;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-bottom: 1px solid #255be3;
+        }
+
+        .star {
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: inline-block;
+            height: 100%;
+            aspect-ratio: 1;
+            align-items: center;
+        }
+
+        .greenBackground {
+            background-color: #4CAF50;
+        }
+
+        .greyBackground {
+            background-color: #909090;
+        }
+
+        .green {
+            color: #4CAF50;
+        }
+
+        .lightGreen {
+            color: #8BC34A;
+        }
+
+        .yellow {
+            color: #e8b428;
+        }
+
+        .lightRed {
+            color: #fd929d;
+        }
+
+        .red {
+            color: #F44336;
+        }
+
+        .grey {
+            color: #333333;
+        }
+
+        #timestamp {
+            color: #6e6e6e;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #main-container {
+            margin: 1em;
+        }
+
+        #measurementInfo {
+            height: 1.5em;
+            align-content: center;
+            text-align: center;
+            color: #333333;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em;
+        }
+
+        #measurementInfo span+span {
+            border-left: solid #909090 1px;
+        }
+
+        #snrContainer {
+            font-weight: bold;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+        }
+
+        #starsContainer {
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            display: block;
+            height: max-content;
+            width: max-content;
+            height: 100%;
+            white-space: nowrap;
+        }
+
+        #results-container {
+            display: block;
+            max-width: 55em; 
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+        footer {
+            background-color: #e3e3e3;
+            color: #363636;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            padding: 0.5em;
+        }
+
+        .footer-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+.footer-container p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.download-buttons {
+    margin-top: 10px;
+}
+
+.download-buttons a img {
+    height: 50px;
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+}
+
+.download-buttons a img:hover {
+    transform: scale(1.05);
+}
+
+.download-buttons a {
+    text-decoration: none; 
+}
+    </style>
+</head>
+
+<body>
+    <div id="main-container">
+        <div class="top-graphic"></div>
+        <div id="measurementInfo"></div>
+        <div id="timestamp"></div>
+        <div id="results-container"></div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 NuraLogix Corporation</p>
+            <p><a href="https://nuralogix.ai">nuralogix.ai</a></p>
+            <p>Try Anura&reg; Lite on your iPhone or Android Phone:</p>
+            <div class="download-buttons">
+                <a href="https://apps.apple.com/us/app/id1358813934" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Download_on_the_App_Store_RGB_blk.svg" alt="Download on the App Store">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=ai.nuralogix.nura" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            let definitions = DeepAffexWebResultsData.definitions
+            let sections = DeepAffexWebResultsData.sections
+            let encodedResultsQueryString = getResultsFromQueryString()
+            let decodedResults = decodeNuraQRString(encodedResultsQueryString)
+
+            renderResults(decodedResults, definitions.pointDefinitions, sections, "en");
+        });
+
+        /**
+         * Retrieves query string results from the current URL.
+         * @returns {string|null} The result query string value if present.
+         */
+        function getResultsFromQueryString() {
+            const urlParams = new URLSearchParams(window.location.search)
+            const resultQuery = urlParams.get('r')
+            return resultQuery
+        }
+    </script>
+</body>
+
+</html>
