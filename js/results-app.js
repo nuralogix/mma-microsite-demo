@@ -158,7 +158,7 @@ function convertResultsByteArrayToResultsObject(resultsByteArray) {
     for (let i = 0; i < resultsByteArray.length; i += 4) {
         let pointID = convertHashByteArrayToString(resultsByteArray.slice(i, i+2))
         let dataView = new DataView(resultsByteArray.slice(i+2, i+4).buffer)
-        result[pointID] = getFloat16(dataView, 0, true).toFixed(2)
+        result[pointID] = parseFloat(getFloat16(dataView, 0, true).toFixed(2))
     }
 
     return result
@@ -267,11 +267,18 @@ function renderBloodPressureRow(results, definitions, container, locale) {
  */
 function getColorClass(value, pointDefinition) {
     let colorClass = 'grey';
-    pointDefinition.scales?.default?.segments?.forEach(segment => {
-        if (value >= segment.min && value <= segment.max) {
-            colorClass = segment.color;
+    let decimalPlaces = pointDefinition.decimalPlaces;
+    let roundedValue = roundToDecimalPlaces(value, decimalPlaces);
+    let segments = pointDefinition.scales?.default?.segments;
+    if (segments) {
+        for (let i = 0; i < segments.length; i++) {
+            let segment = segments[i];
+            if (roundedValue >= segment.min && roundedValue < segment.max) {
+                colorClass = segment.color;
+                break;
+            }
         }
-    });
+    }
     return colorClass;
 }
 
@@ -285,7 +292,8 @@ function getColorClass(value, pointDefinition) {
  */
 function formatResultValue(value, decimalPlaces, units, locale) {
     let isPercentageUnit = units == "PERCENT"
-    let convertedValue = isPercentageUnit ? value / 100 : value
+    let roundedValue = roundToDecimalPlaces(value, decimalPlaces);
+    let convertedValue = isPercentageUnit ? roundedValue / 100 : roundedValue
     let options = { 
         maximumFractionDigits: decimalPlaces, 
         minimumFractionDigits: decimalPlaces, 
@@ -374,4 +382,17 @@ function crc16(string) {
 
 // Return as a Uint8Array - little-endian
     return new Uint8Array([lsb, msb]);
+}
+
+/**
+ * Rounds a number to a specified number of decimal places.
+ * @param {number} value - The value to round.
+ * @param {number} decimalPlaces - The number of decimal places to round to.
+ * @returns {number} The rounded value.
+ */
+function roundToDecimalPlaces(value, decimalPlaces) {
+    if (isNaN(value)) {
+        return value;
+    }
+    return Number(Math.round(value+'e'+decimalPlaces)+'e-'+decimalPlaces);
 }
