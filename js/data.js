@@ -72,8 +72,8 @@ const DeepAffexWebResultsData = (() => {
             ]
         }
     ];
-    
-    const definitions ={
+
+    const definitions = {
         "pointDefinitions": {
             "HR_BPM": {
                 "scales": {
@@ -213,32 +213,32 @@ const DeepAffexWebResultsData = (() => {
                 "upperBound": 5,
                 "lowerBound": 1,
                 "decimalPlaces": 0,
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 2,
                                 "color": "red",
                                 "min": 1
                             },
                             {
-                                "max": 1,
+                                "max": 3,
                                 "min": 2,
                                 "color": "lightRed"
                             },
                             {
-                                "min": 2,
-                                "color": "yellow",
-                                "max": 3
-                            },
-                            {
-                                "color": "lightGreen",
                                 "min": 3,
+                                "color": "yellow",
                                 "max": 4
                             },
                             {
-                                "color": "green",
+                                "color": "lightGreen",
                                 "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
                                 "max": 5
                             }
                         ]
@@ -284,33 +284,34 @@ const DeepAffexWebResultsData = (() => {
                 }
             },
             "RISKS_SCORE": {
+                "lowerBound": 1,
                 "upperBound": 5,
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 2,
                                 "color": "red",
                                 "min": 1
                             },
                             {
-                                "max": 1,
+                                "max": 3,
                                 "min": 2,
                                 "color": "lightRed"
                             },
                             {
-                                "min": 2,
-                                "color": "yellow",
-                                "max": 3
-                            },
-                            {
-                                "color": "lightGreen",
                                 "min": 3,
+                                "color": "yellow",
                                 "max": 4
                             },
                             {
-                                "color": "green",
+                                "color": "lightGreen",
                                 "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
                                 "max": 5
                             }
                         ]
@@ -318,8 +319,7 @@ const DeepAffexWebResultsData = (() => {
                 },
                 "key": "RISKS_SCORE",
                 "decimalPlaces": 0,
-                "units": "",
-                "lowerBound": 1
+                "units": ""
             },
             "BP_STROKE": {
                 "lowerBound": 0,
@@ -1024,7 +1024,7 @@ const DeepAffexWebResultsData = (() => {
                 "decimalPlaces": 1,
                 "upperBound": 41.5,
                 "key": "BODY_TEMPERATURE",
-                "units": "",
+                "units": "CELSIUS",
                 "lowerBound": 35
             },
             "AGE": {
@@ -1078,13 +1078,13 @@ const DeepAffexWebResultsData = (() => {
                 "lowerBound": 0,
                 "decimalPlaces": 0,
                 "key": "HEALTH_SCORE",
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 20,
                                 "color": "red",
-                                "min": 20
+                                "min": 0
                             },
                             {
                                 "max": 40,
@@ -1264,32 +1264,32 @@ const DeepAffexWebResultsData = (() => {
                 "upperBound": 100
             },
             "VITAL_SCORE": {
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 2,
                                 "color": "red",
                                 "min": 1
                             },
                             {
-                                "max": 1,
+                                "max": 3,
                                 "min": 2,
                                 "color": "lightRed"
                             },
                             {
-                                "min": 2,
-                                "color": "yellow",
-                                "max": 3
-                            },
-                            {
-                                "color": "lightGreen",
                                 "min": 3,
+                                "color": "yellow",
                                 "max": 4
                             },
                             {
-                                "color": "green",
+                                "color": "lightGreen",
                                 "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
                                 "max": 5
                             }
                         ]
@@ -1379,7 +1379,7 @@ const DeepAffexWebResultsData = (() => {
             },
             "SNR": {
                 "decimalPlaces": 1,
-                "units": "dB",
+                "units": "DECIBELS",
                 "upperBound": 10,
                 "scales": {},
                 "lowerBound": 0,
@@ -1390,32 +1390,32 @@ const DeepAffexWebResultsData = (() => {
                 "lowerBound": 1,
                 "units": "",
                 "upperBound": 5,
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 2,
                                 "color": "red",
                                 "min": 1
                             },
                             {
-                                "max": 1,
+                                "max": 3,
                                 "min": 2,
                                 "color": "lightRed"
                             },
                             {
-                                "min": 2,
-                                "color": "yellow",
-                                "max": 3
-                            },
-                            {
-                                "color": "lightGreen",
                                 "min": 3,
+                                "color": "yellow",
                                 "max": 4
                             },
                             {
-                                "color": "green",
+                                "color": "lightGreen",
                                 "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
                                 "max": 5
                             }
                         ]
@@ -1429,32 +1429,32 @@ const DeepAffexWebResultsData = (() => {
                 "lowerBound": 1,
                 "decimalPlaces": 0,
                 "units": "",
-                "scales":  {
+                "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 0,
+                                "max": 2,
                                 "color": "red",
                                 "min": 1
                             },
                             {
-                                "max": 1,
+                                "max": 3,
                                 "min": 2,
                                 "color": "lightRed"
                             },
                             {
-                                "min": 2,
-                                "color": "yellow",
-                                "max": 3
-                            },
-                            {
-                                "color": "lightGreen",
                                 "min": 3,
+                                "color": "yellow",
                                 "max": 4
                             },
                             {
-                                "color": "green",
+                                "color": "lightGreen",
                                 "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
                                 "max": 5
                             }
                         ]
@@ -1549,7 +1549,7 @@ const DeepAffexWebResultsData = (() => {
             },
             "BP_DIASTOLIC": {
                 "units": "MMHG",
-                "upperBound": 180,
+                "upperBound": 120,
                 "lowerBound": 30,
                 "key": "BP_DIASTOLIC",
                 "decimalPlaces": 0,
@@ -1701,7 +1701,7 @@ const DeepAffexWebResultsData = (() => {
             }
         }
     };
-    
+
     const translations = {
         "SCREEN_RESULTS_SUBTITLE_VITALS": {
             "default": "Vitals",
@@ -1786,7 +1786,7 @@ const DeepAffexWebResultsData = (() => {
         "DFXPOINT_UNIT:PERCENT": {
             "default": "%",
             "ko": "%",
-            "zh": ""%","
+            "zh": "%"
         },
         "DFXPOINT_UNIT:CM": {
             "default": "cm",
@@ -1797,6 +1797,11 @@ const DeepAffexWebResultsData = (() => {
             "default": "kg",
             "ko": "kg",
             "zh": "kg"
+        },
+        "DFXPOINT_UNIT:CELSIUS": {
+            "default": "°C",
+            "ko": "°C",
+            "zh": "°C"
         },
         "DFXPOINT_TITLE:HR_BPM": {
             "default": "Pulse Rate",
