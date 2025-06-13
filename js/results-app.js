@@ -277,8 +277,15 @@ function getColorClass(value, pointDefinition) {
                 colorClass = segment.color;
                 break;
             }
+
+            // Special case for the last segment, if the value is equal to the max of the last segment
+            if (i === segments.length - 1 && roundedValue === segment.max) {
+                colorClass = segment.color;
+                break;
+            }
         }
     }
+
     return colorClass;
 }
 
