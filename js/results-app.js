@@ -179,7 +179,10 @@ function renderResultRow(result, pointDefinition, container, locale) {
 
     let iconEl = document.createElement('div')
     iconEl.className = 'result-icon'
-    iconEl.style.maskImage = `url("assets/svg/${pointDefinition.key}.svg")`
+    iconEl.style.background = `url("assets/svg/${pointDefinition.key}.svg")`
+    iconEl.style.backgroundSize = 'contain'
+    iconEl.style.backgroundRepeat = 'no-repeat'
+    iconEl.style.backgroundPosition = 'center'
 
     let nameLabel = document.createElement('span')
     nameLabel.className = "result-name"
