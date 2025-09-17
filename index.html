@@ -58,17 +58,27 @@
             bottom: -5px;
             border-bottom: 1px solid #e0e0e0;
         }
-
         .result-icon {
             margin-right: 10px;
             width: 30px;
             height: 30px;
-            background: no-repeat center center;
-            background-size: contain;
-            background-color: #023676;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            mask-position: center;
+            color: #023676;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .result-icon.fallback {
+            font-size: 20px;
+            text-align: center;
+            line-height: 30px;
+            color: currentColor;
         }
 
         .result-name {

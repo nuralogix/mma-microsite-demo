@@ -172,14 +172,12 @@ function convertResultsByteArrayToResultsObject(resultsByteArray) {
  */
 function renderResultRow(result, pointDefinition, container, locale) {
     let colorClass = getColorClass(result, pointDefinition);
-    let formattedValue = formatResultValue(result, pointDefinition.decimalPlaces, pointDefinition.units, locale);
+    let formattedValue = formatResultValue(result, pointDefinition.decimalPlaces, pointDefinition.units, locale);    let resultEl = document.createElement('div');
+    resultEl.className = `result`;
 
-    let resultEl = document.createElement('div')
-    resultEl.className = `result`
-
-    let iconEl = document.createElement('div')
-    iconEl.className = 'result-icon'
-    iconEl.style.maskImage = `url("assets/svg/${pointDefinition.key}.svg")`
+    let iconEl = document.createElement('div');
+    iconEl.className = 'result-icon';
+    loadSVGIcon(iconEl, pointDefinition.key);
 
     let nameLabel = document.createElement('span')
     nameLabel.className = "result-name"
@@ -218,11 +216,9 @@ function renderBloodPressureRow(results, definitions, container, locale) {
     let diastolicDefinition = definitions["BP_DIASTOLIC"];
 
     let resultEl = document.createElement('div');
-    resultEl.className = `result`;
-
-    let iconEl = document.createElement('div');
+    resultEl.className = `result`;    let iconEl = document.createElement('div');
     iconEl.className = 'result-icon';
-    iconEl.style.maskImage = `url("assets/svg/BP.svg")`
+    loadSVGIcon(iconEl, 'BP');
 
     let nameLabel = document.createElement('span');
     nameLabel.className = "result-name"
@@ -402,4 +398,35 @@ function roundToDecimalPlaces(value, decimalPlaces) {
         return value;
     }
     return Number(Math.round(value+'e'+decimalPlaces)+'e-'+decimalPlaces);
+}
+
+/**
+ * Loads SVG content using fetch for webview compatibility.
+ * @param {HTMLElement} iconElement - The icon element to populate with SVG content.
+ * @param {string} iconName - The name of the SVG icon to load.
+ */
+function loadSVGIcon(iconElement, iconName) {
+    fetch(`assets/svg/${iconName}.svg`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })        .then(svgContent => {
+            // Replace black colors and gray colors with currentColor to allow CSS color control
+            svgContent = svgContent.replace(/fill="black"/g, 'fill="currentColor"');
+            svgContent = svgContent.replace(/stroke="black"/g, 'stroke="currentColor"');
+            svgContent = svgContent.replace(/fill="%23cccccc"/g, 'fill="currentColor"');
+            svgContent = svgContent.replace(/fill="#cccccc"/g, 'fill="currentColor"');
+            svgContent = svgContent.replace(/fill="#1D1D1B"/g, 'fill="currentColor"');
+            
+            // Insert the SVG content directly
+            iconElement.innerHTML = svgContent;
+        })
+        .catch(error => {
+            console.warn(`Could not load icon: ${iconName}`, error);
+            // Fallback: use a generic icon character with CSS styling
+            iconElement.innerHTML = '●';
+            iconElement.classList.add('fallback');
+        });
 }
