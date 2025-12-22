@@ -18,7 +18,7 @@ function renderResults(results, definitions, sections, pageLocale) {
     let snr = getPointResult("SNR", results)
     if (snr && !isNaN(snr)) {
         let snrInfo = document.createElement('span')
-        let snrPointDefinition = definitions["SNR"]
+        let snrPointDefinition = definitions["SNR"] || { key: "SNR" }
         let snrDisplayValue = formatResultValue(
             snr, 
             snrPointDefinition.decimalPlaces, 
@@ -27,6 +27,15 @@ function renderResults(results, definitions, sections, pageLocale) {
         )
         snrInfo.id = "snrContainer"
         snrInfo.textContent = `SNR: ${snrDisplayValue} dB`
+
+        let snrDialogBuilder = () => PointInfoDialog.buildPointInfoDialogOptions(snrPointDefinition, snr, pageLocale)
+        let snrOpenDialog = () => {
+            let dialogOptions = snrDialogBuilder()
+            PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, pageLocale)
+        }
+        let snrIcon = PointInfoDialog.createResultInfoIcon(pageLocale, snrOpenDialog)
+        snrInfo.appendChild(snrIcon)
+
         measurementInfo.append(snrInfo)
     }
 
@@ -43,6 +52,16 @@ function renderResults(results, definitions, sections, pageLocale) {
             }
             stars.append(star)
         }
+
+        let starPointDefinition = definitions["STAR_RATING"] || { key: "STAR_RATING" }
+        let starDialogBuilder = () => PointInfoDialog.buildPointInfoDialogOptions(starPointDefinition, starRating, pageLocale)
+        let starOpenDialog = () => {
+            let dialogOptions = starDialogBuilder()
+            PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, pageLocale)
+        }
+        let starIcon = PointInfoDialog.createResultInfoIcon(pageLocale, starOpenDialog)
+        stars.appendChild(starIcon)
+
         measurementInfo.appendChild(stars)
     }
     
@@ -172,8 +191,10 @@ function convertResultsByteArrayToResultsObject(resultsByteArray) {
  */
 function renderResultRow(result, pointDefinition, container, locale) {
     let colorClass = getColorClass(result, pointDefinition);
-    let formattedValue = formatResultValue(result, pointDefinition.decimalPlaces, pointDefinition.units, locale);    let resultEl = document.createElement('div');
+    let formattedValue = formatResultValue(result, pointDefinition.decimalPlaces, pointDefinition.units, locale);
+    let resultEl = document.createElement('div');
     resultEl.className = `result`;
+    resultEl.dataset.pointKey = pointDefinition.key;
 
     let iconEl = document.createElement('div');
     iconEl.className = 'result-icon';
@@ -195,6 +216,15 @@ function renderResultRow(result, pointDefinition, container, locale) {
 
     resultEl.appendChild(iconEl)
     resultEl.appendChild(nameLabel)
+    let dialogBuilder = () => PointInfoDialog.buildPointInfoDialogOptions(pointDefinition, result, locale)
+    let openDialog = () => {
+        let dialogOptions = dialogBuilder()
+        PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, locale)
+    }
+    if (shouldShowInfoIcon(pointDefinition.key)) {
+        let infoIndicator = PointInfoDialog.createResultInfoIcon(locale, openDialog)
+        resultEl.appendChild(infoIndicator)
+    }
     resultEl.appendChild(valueEl)
     resultEl.appendChild(unitEl)
 
@@ -216,7 +246,10 @@ function renderBloodPressureRow(results, definitions, container, locale) {
     let diastolicDefinition = definitions["BP_DIASTOLIC"];
 
     let resultEl = document.createElement('div');
-    resultEl.className = `result`;    let iconEl = document.createElement('div');
+    resultEl.className = `result`;
+    resultEl.dataset.pointKey = 'BP';
+
+    let iconEl = document.createElement('div');
     iconEl.className = 'result-icon';
     loadSVGIcon(iconEl, 'BP');
 
@@ -249,6 +282,18 @@ function renderBloodPressureRow(results, definitions, container, locale) {
 
     resultEl.appendChild(iconEl);
     resultEl.appendChild(nameLabel);
+    let openDialog = () => {
+        let dialogOptions = PointInfoDialog.buildBloodPressureInfoDialogOptions(
+            systolicDefinition,
+            systolicResult,
+            diastolicDefinition,
+            diastolicResult,
+            locale
+        )
+        PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, locale)
+    }
+    let infoIndicator = PointInfoDialog.createResultInfoIcon(locale, openDialog)
+    resultEl.appendChild(infoIndicator)
     resultEl.appendChild(bloodPressureValueEl);
     resultEl.appendChild(unitEl);
 
@@ -316,10 +361,15 @@ function formatResultValue(value, decimalPlaces, units, locale) {
  * @returns {string} The localized string or the key if not found.
  */
 function localize(key, locale) {
-    // Assuming a simple scenario with only default language
-    return  DeepAffexWebResultsData.translations[key][locale] ||
-            DeepAffexWebResultsData.translations[key]?.default ||
-             key;
+    return getLocalizedValue(key, locale) ?? key
+}
+
+function getLocalizedValue(key, locale) {
+    let entry = DeepAffexWebResultsData.translations[key]
+    if (!entry) {
+        return null
+    }
+    return entry[locale] ?? entry.default ?? null
 }
 
 /**
@@ -429,4 +479,8 @@ function loadSVGIcon(iconElement, iconName) {
             iconElement.innerHTML = '●';
             iconElement.classList.add('fallback');
         });
+}
+
+function shouldShowInfoIcon(pointKey) {
+    return pointKey !== 'AGE' && pointKey !== 'BODY_TEMPERATURE' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
 }

@@ -13,6 +13,7 @@
         } = float16;
     </script>
     <script src="js/data.js"></script>
+    <script src="js/point-info-dialog.js"></script>
     <script src="js/results-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +50,15 @@
             /* Needed for pseudo element */
         }
 
+        .result-clickable {
+            cursor: pointer;
+        }
+
+        .result-clickable:focus {
+            outline: 2px solid #255be3;
+            outline-offset: 4px;
+        }
+
         /* Adding line under each result */
         .result:not(:last-child)::after {
             content: '';
@@ -83,6 +93,37 @@
 
         .result-name {
             margin-right: 10px;
+        }
+
+        .result-info-icon {
+            border: 1px solid transparent;
+            background-color: rgba(2, 54, 118, 0.08);
+            color: #023676;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+            margin-left: -5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.45em;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        #snrContainer .result-info-icon,
+        #starsContainer .result-info-icon {
+            margin-left: 5px;
+            margin-right: 0;
+        }
+
+        .result-info-icon:hover,
+        .result-info-icon:active,
+        .result-info-icon:focus {
+            outline: none;
+            background-color: none;
         }
 
         .result-value {
@@ -240,6 +281,250 @@
 .download-buttons a {
     text-decoration: none; 
 }
+
+        .point-info-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.35);
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .point-info-overlay.visible {
+            display: flex;
+        }
+
+        .point-info-dialog {
+            background: #ffffff;
+            border-radius: 12px;
+            max-width: 520px;
+            max-height: 80vh;
+            width: 100%;
+            padding: 1.5rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .point-info-title {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #023676;
+        }
+
+        .point-info-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            border: none;
+            background: none;
+            color: #023676;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .point-info-close::before {
+            content: '×';
+        }
+
+        .point-info-close:hover,
+        .point-info-close:active,
+        .point-info-close:focus {
+            background: none;
+            outline: none;
+        }
+
+        .point-info-content p {
+            margin: 0.5rem 0;
+        }
+
+        .point-info-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .point-info-segments {
+            background: linear-gradient(135deg, #f7f9ff 0%, #eef1fb 100%);
+            border: 1px solid #e1e7fb;
+            border-radius: 18px;
+            padding: 1rem 1.25rem 1.35rem;
+        }
+
+        .point-info-current-value {
+            font-size: 2.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .point-info-segment-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #5d6276;
+            margin-top: 0.75rem;
+        }
+
+        .point-info-segments-track-wrapper {
+            position: relative;
+            margin-top: 0.8rem;
+        }
+
+        .point-info-segments-track {
+            position: relative;
+            display: flex;
+            height: 12px;
+            border-radius: 999px;
+            overflow: hidden;
+            background-color: #dfe4f5;
+        }
+
+        .point-info-segment-block {
+            flex: 1;
+        }
+
+        .point-info-segment-pointer {
+            position: absolute;
+            top: 100%;
+            transform: translateX(-50%) translateY(-10px);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .point-info-special-block {
+            padding: 0 0.25rem;
+        }
+
+        .point-info-state-label {
+            margin: 0 0 0.35rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #717894;
+        }
+
+        .point-info-markdown {
+            color: #1c1f2d;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        .point-info-markdown h3,
+        .point-info-markdown h4 {
+            margin: 1rem 0 0.35rem;
+            color: #023676;
+        }
+
+        .point-info-markdown p {
+            margin: 0.4rem 0;
+        }
+
+        .point-info-markdown-list {
+            padding-left: 1.25rem;
+            margin: 0.35rem 0;
+        }
+
+        .point-info-markdown table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.85rem 0;
+            font-size: 0.9rem;
+        }
+
+        .point-info-markdown th,
+        .point-info-markdown td {
+            border: 1px solid #e0e2eb;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .point-info-markdown th {
+            background: #f5f7fb;
+            font-weight: 600;
+        }
+
+        .point-info-markdown a {
+            color: #255be3;
+            text-decoration: none;
+        }
+
+        .point-info-markdown a:hover {
+            text-decoration: underline;
+        }
+
+        .point-info-stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.35rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .point-info-stars .star {
+            width: 1.4rem;
+            height: 1.4rem;
+        }
+
+        .point-info-star-content {
+            text-align: center;
+        }
+
+        .point-info-legend-title {
+            margin-top: 1rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            color: #023676;
+        }
+
+        .point-info-scale-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+        }
+
+        .point-info-scale-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.35rem;
+            font-size: 0.95rem;
+        }
+
+        .point-info-color-swatch {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 999px;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .point-info-color-swatch.green { background-color: #4CAF50; }
+        .point-info-color-swatch.lightGreen { background-color: #8BC34A; }
+        .point-info-color-swatch.yellow { background-color: #e8b428; }
+        .point-info-color-swatch.lightRed { background-color: #fd929d; }
+        .point-info-color-swatch.red { background-color: #F44336; }
+        .point-info-color-swatch.grey { background-color: #909090; }
+
+        .point-info-subsection h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.25rem;
+            color: #023676;
+            font-size: 1.05rem;
+        }
+
+        body.info-dialog-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 
