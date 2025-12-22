@@ -215,7 +215,11 @@ function renderResultRow(result, pointDefinition, container, locale) {
     }
 
     resultEl.appendChild(iconEl)
-    resultEl.appendChild(nameLabel)
+
+    let nameWrapper = document.createElement('div')
+    nameWrapper.className = 'result-name-wrapper'
+    nameWrapper.appendChild(nameLabel)
+
     let dialogBuilder = () => PointInfoDialog.buildPointInfoDialogOptions(pointDefinition, result, locale)
     let openDialog = () => {
         let dialogOptions = dialogBuilder()
@@ -223,8 +227,10 @@ function renderResultRow(result, pointDefinition, container, locale) {
     }
     if (shouldShowInfoIcon(pointDefinition.key)) {
         let infoIndicator = PointInfoDialog.createResultInfoIcon(locale, openDialog)
-        resultEl.appendChild(infoIndicator)
+        nameWrapper.appendChild(infoIndicator)
     }
+    resultEl.appendChild(nameWrapper)
+
     resultEl.appendChild(valueEl)
     resultEl.appendChild(unitEl)
 
@@ -281,7 +287,11 @@ function renderBloodPressureRow(results, definitions, container, locale) {
     unitEl.textContent = localize("DFXPOINT_UNIT:MMHG", locale);
 
     resultEl.appendChild(iconEl);
-    resultEl.appendChild(nameLabel);
+
+    let nameWrapper = document.createElement('div')
+    nameWrapper.className = 'result-name-wrapper'
+    nameWrapper.appendChild(nameLabel)
+
     let openDialog = () => {
         let dialogOptions = PointInfoDialog.buildBloodPressureInfoDialogOptions(
             systolicDefinition,
@@ -293,7 +303,9 @@ function renderBloodPressureRow(results, definitions, container, locale) {
         PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, locale)
     }
     let infoIndicator = PointInfoDialog.createResultInfoIcon(locale, openDialog)
-    resultEl.appendChild(infoIndicator)
+    nameWrapper.appendChild(infoIndicator)
+    resultEl.appendChild(nameWrapper)
+
     resultEl.appendChild(bloodPressureValueEl);
     resultEl.appendChild(unitEl);
 
