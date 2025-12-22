@@ -557,7 +557,8 @@
             let encodedResultsQueryString = getResultsFromQueryString()
             let decodedResults = decodeNuraQRString(encodedResultsQueryString)
 
-            renderResults(decodedResults, definitions.pointDefinitions, sections, "en");
+            let lang = getLangFromBrowser();
+            renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
         });
 
         /**
@@ -568,6 +569,20 @@
             const urlParams = new URLSearchParams(window.location.search)
             const resultQuery = urlParams.get('r')
             return resultQuery
+        }
+
+        /**
+         * Gets the browser's preferred language.
+         * @returns {string} The language code (e.g., 'en', 'zh'), defaults to 'en' if not found.
+         */
+        function getLangFromBrowser() {
+            let lang = navigator.language
+            console.log("current browser language: " + lang);
+            if (lang.includes('-')) {
+                return lang.split('-')[0];
+            } else {
+                return "en";
+            }
         }
     </script>
 </body>
