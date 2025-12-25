@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anura Magic Mirror by NuraLogix</title>
+    <title>Magic Mirror</title>
     <script src="js/vendor/float16.min.js"></script>
     <script>
         const {
@@ -27,18 +27,15 @@
             box-sizing: border-box;
         }
 
-        a {
-            color: #5ba5ff;
+        #main-header {
+            text-align: center;
+            color: #F65F77;
+            font-weight: 600;
+            margin: 20px 0;
         }
 
-        .top-graphic {
-            background: url('assets/imgs/mma-logo.png') no-repeat center center;
-            background-size: contain;
-            height: 300px;
-            margin-left: 2em;
-            margin-right: 2em;
-            margin-bottom: 2em;
-            margin-top: 2em;
+        a {
+            color: #5ba5ff;
         }
 
         .result {
@@ -537,7 +534,7 @@
 
 <body>
     <div id="main-container">
-        <div class="top-graphic"></div>
+        <div id="main-header"></div>
         <div id="measurementInfo"></div>
         <div id="timestamp"></div>
         <div id="results-container"></div>
@@ -565,6 +562,12 @@
             let decodedResults = decodeNuraQRString(encodedResultsQueryString)
 
             let lang = getLangFromBrowser();
+
+            let header = document.getElementById('main-header');
+            let title = document.createElement('h1');
+            title.textContent = localize("RESULTS_TITLE", lang);
+            header.appendChild(title);
+
             renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
         });
 
