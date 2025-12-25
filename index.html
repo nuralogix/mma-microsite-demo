@@ -257,34 +257,11 @@
             padding: 0.5em;
         }
 
-        .footer-container {
+        #disclaimer-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
         }
-
-.footer-container p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.download-buttons {
-    margin-top: 10px;
-}
-
-.download-buttons a img {
-    height: 50px;
-    margin: 0 10px;
-    transition: transform 0.3s ease;
-}
-
-.download-buttons a img:hover {
-    transform: scale(1.05);
-}
-
-.download-buttons a {
-    text-decoration: none; 
-}
 
         .point-info-overlay {
             position: fixed;
@@ -529,6 +506,15 @@
         body.info-dialog-open {
             overflow: hidden;
         }
+
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
+            white-space: pre-line;
+            line-height: 1.4;
+            margin: 0 1rem;
+        }
     </style>
 </head>
 
@@ -540,19 +526,7 @@
         <div id="results-container"></div>
     </div>
     <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 NuraLogix Corporation</p>
-            <p><a href="https://nuralogix.ai">nuralogix.ai</a></p>
-            <p>Try Anura&reg; Lite on your iPhone or Android Phone:</p>
-            <div class="download-buttons">
-                <a href="https://apps.apple.com/us/app/id1358813934" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Download_on_the_App_Store_RGB_blk.svg" alt="Download on the App Store">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=ai.nuralogix.nura" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-                </a>
-            </div>
-        </div>
+        <div id="disclaimer-container"></div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -563,25 +537,24 @@
 
             let lang = getLangFromBrowser();
 
-            let header = document.getElementById('main-header');
-            let title = document.createElement('h1');
-            title.textContent = localize("RESULTS_TITLE", lang);
-            header.appendChild(title);
-
+            renderHeader(lang);
             renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
+            renderDisclaimer(lang);
         });
 
-        function renderDisclaimer(disclaimerData, lang) {
-            if (!disclaimerData) return;
-            const text = disclaimerData[lang] || disclaimerData['default'];
+        function renderHeader(lang) {
+            const header = document.getElementById('main-header');
+            const title = document.createElement('h1');
+            title.textContent = localize("RESULTS_TITLE", lang);
+            header.appendChild(title);
+        }
+
+        function renderDisclaimer(lang) {
             const container = document.getElementById('disclaimer-container');
-            if (container) {
-                container.innerHTML = ''; // Clear existing content
-                const p = document.createElement('p');
-                p.textContent = text.replace(/^[ \t]+/gm, '');
-                p.className = 'footer-disclaimer';
-                container.appendChild(p);
-            }
+            const p = document.createElement('p');
+            p.textContent = localize("RESULTS_DISCLAIMER", lang);
+            p.className = "footer-disclaimer";
+            container.appendChild(p);
         }
 
         /**
