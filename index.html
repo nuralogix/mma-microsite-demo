@@ -256,38 +256,11 @@
             text-align: center;
         }
 
-        footer p {
-            padding: 0.5em;
-        }
-
-        .footer-container {
+        #disclaimer-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
         }
-
-.footer-container p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.download-buttons {
-    margin-top: 10px;
-}
-
-.download-buttons a img {
-    height: 50px;
-    margin: 0 10px;
-    transition: transform 0.3s ease;
-}
-
-.download-buttons a img:hover {
-    transform: scale(1.05);
-}
-
-.download-buttons a {
-    text-decoration: none; 
-}
 
         .point-info-overlay {
             position: fixed;
@@ -529,6 +502,15 @@
             font-size: 1.05rem;
         }
 
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
+            white-space: pre-line;
+            line-height: 1.4;
+            margin: 0 1rem;
+        }
+
         body.info-dialog-open {
             overflow: hidden;
         }
@@ -543,30 +525,41 @@
         <div id="results-container"></div>
     </div>
     <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 NuraLogix Corporation</p>
-            <p><a href="https://nuralogix.ai">nuralogix.ai</a></p>
-            <p>Try Anura&reg; Lite on your iPhone or Android Phone:</p>
-            <div class="download-buttons">
-                <a href="https://apps.apple.com/us/app/id1358813934" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Download_on_the_App_Store_RGB_blk.svg" alt="Download on the App Store">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=ai.nuralogix.nura" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-                </a>
-            </div>
-        </div>
+        <div id="disclaimer-container"></div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             let definitions = DeepAffexWebResultsData.definitions
+            let translations = DeepAffexWebResultsData.translations
             let sections = DeepAffexWebResultsData.sections
-            let encodedResultsQueryString = getResultsFromQueryString()
-            let decodedResults = decodeNuraQRString(encodedResultsQueryString)
-
+            
             let lang = getLangFromBrowser();
-            renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
+            
+            renderDisclaimer(translations.DISCLAIMER, lang);          
+
+            try {
+                let encodedResultsQueryString = getResultsFromQueryString()
+                if (encodedResultsQueryString) {
+                    let decodedResults = decodeNuraQRString(encodedResultsQueryString)
+                    renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
+                }
+            } catch (e) {
+                console.error("Error rendering results:", e);
+            }
         });
+
+        function renderDisclaimer(disclaimerData, lang) {
+            if (!disclaimerData) return;
+            const text = disclaimerData[lang] || disclaimerData['default'];
+            const container = document.getElementById('disclaimer-container');
+            if (container) {
+                container.innerHTML = ''; // Clear existing content
+                const p = document.createElement('p');
+                p.textContent = text.replace(/^[ \t]+/gm, ''); 
+                p.className = 'footer-disclaimer';
+                container.appendChild(p);
+            }
+        }
 
         /**
          * Retrieves query string results from the current URL.
