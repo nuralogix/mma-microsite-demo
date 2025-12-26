@@ -542,20 +542,6 @@
             renderDisclaimer(lang);
         });
 
-        function renderHeader(lang) {
-            const header = document.getElementById('main-header');
-            const title = document.createElement('h1');
-            title.textContent = localize("RESULTS_TITLE", lang);
-            header.appendChild(title);
-        }
-
-        function renderDisclaimer(lang) {
-            const container = document.getElementById('disclaimer-container');
-            const p = document.createElement('p');
-            p.textContent = localize("RESULTS_DISCLAIMER", lang);
-            p.className = "footer-disclaimer";
-            container.appendChild(p);
-        }
 
         /**
          * Retrieves query string results from the current URL.
