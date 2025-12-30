@@ -40,7 +40,6 @@ const PointInfoDialog = (() => {
         grey: '#9E9E9E'
     }
 
-    const INFO_DIALOG_APP_NAME = 'Magic Mirror'
     const POINT_INFO_DEBUG_LOGS = true
 
     let pointInfoDialogOverlay = null
@@ -331,7 +330,7 @@ const PointInfoDialog = (() => {
             locale,
             source: localizationRecord.source
         })
-        return createMarkdownElement(markdown)
+        return createMarkdownElement(markdown, locale)
     }
 
     function getDescriptionLocalizationKey(pointKey) {
@@ -390,7 +389,7 @@ const PointInfoDialog = (() => {
         label.className = 'point-info-state-label'
         label.textContent = `${localize('DFXPOINT_DESC:STRESS_STATE', locale)}: ${localize(titleKey, locale)}`
         container.appendChild(label)
-        let markdownElement = createMarkdownElement(markdown)
+        let markdownElement = createMarkdownElement(markdown, locale)
         if (markdownElement) {
             container.appendChild(markdownElement)
         } else {
@@ -464,7 +463,7 @@ const PointInfoDialog = (() => {
         container.appendChild(starRow)
         let markdown = getLocalizedValue('DFXPOINT_DESC:STAR_RATING', locale)
         if (markdown) {
-            let markdownElement = createMarkdownElement(markdown)
+            let markdownElement = createMarkdownElement(markdown, locale)
             if (markdownElement) {
                 container.appendChild(markdownElement)
             }
@@ -624,14 +623,14 @@ const PointInfoDialog = (() => {
         return localizationRecord.entry[locale] ?? localizationRecord.entry.default ?? null
     }
 
-    function createMarkdownElement(markdownText) {
+    function createMarkdownElement(markdownText, locale) {
         if (!markdownText) {
             logPointInfoDebug('createMarkdownElement received empty text')
             return null
         }
         let wrapper = document.createElement('div')
         wrapper.className = 'point-info-markdown'
-        wrapper.appendChild(renderMarkdownToFragment(replaceAppNamePlaceholders(markdownText)))
+        wrapper.appendChild(renderMarkdownToFragment(replaceAppNamePlaceholders(markdownText, locale)))
         return wrapper
     }
 
@@ -824,18 +823,18 @@ const PointInfoDialog = (() => {
         })
     }
 
-    function replaceAppNamePlaceholders(text) {
+    function replaceAppNamePlaceholders(text, locale) {
         if (!text) {
             return ''
         }
-        return text.replace(/\{APP_NAME\}/g, getAppName())
+        return text.replace(/\{APP_NAME\}/g, getAppName(locale))
     }
 
-    function getAppName() {
+    function getAppName(locale) {
         if (typeof window !== 'undefined' && window.APP_NAME) {
             return window.APP_NAME
         }
-        return INFO_DIALOG_APP_NAME
+        return localize('APP_NAME', locale)
     }
 
     function getInfoDialogStrings(locale) {

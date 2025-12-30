@@ -1703,7 +1703,7 @@ const DeepAffexWebResultsData = (() => {
     };
 
     const translations = {
-        "RESULTS_TITLE": {
+        "APP_NAME": {
             "default": "Magic Mirror",
             "ko": "스마트 건강 거울",
             "zh": "智能健康魔镜"

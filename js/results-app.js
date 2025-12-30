@@ -504,7 +504,7 @@ function shouldShowInfoIcon(pointKey) {
 function renderHeader(lang) {
     let header = document.getElementById('main-header');
     let title = document.createElement('h1');
-    title.textContent = localize("RESULTS_TITLE", lang);
+    title.textContent = localize("APP_NAME", lang);
     header.appendChild(title);
 }
 
