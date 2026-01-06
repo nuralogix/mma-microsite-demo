@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anura Magic Mirror by NuraLogix</title>
+    <title>MagicMirror™</title>
     <script src="js/vendor/float16.min.js"></script>
     <script>
         const {
@@ -27,18 +27,15 @@
             box-sizing: border-box;
         }
 
-        a {
-            color: #5ba5ff;
+        #main-header {
+            text-align: center;
+            color: #F65F77;
+            font-weight: 600;
+            margin: 20px 0;
         }
 
-        .top-graphic {
-            background: url('assets/imgs/mma-logo.png') no-repeat center center;
-            background-size: contain;
-            height: 300px;
-            margin-left: 2em;
-            margin-right: 2em;
-            margin-bottom: 2em;
-            margin-top: 2em;
+        a {
+            color: #5ba5ff;
         }
 
         .result {
@@ -260,34 +257,11 @@
             padding: 0.5em;
         }
 
-        .footer-container {
+        #disclaimer-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
         }
-
-.footer-container p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.download-buttons {
-    margin-top: 10px;
-}
-
-.download-buttons a img {
-    height: 50px;
-    margin: 0 10px;
-    transition: transform 0.3s ease;
-}
-
-.download-buttons a img:hover {
-    transform: scale(1.05);
-}
-
-.download-buttons a {
-    text-decoration: none; 
-}
 
         .point-info-overlay {
             position: fixed;
@@ -532,30 +506,27 @@
         body.info-dialog-open {
             overflow: hidden;
         }
+
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
+            white-space: pre-line;
+            line-height: 1.4;
+            margin: 0 1rem;
+        }
     </style>
 </head>
 
 <body>
     <div id="main-container">
-        <div class="top-graphic"></div>
+        <div id="main-header"></div>
         <div id="measurementInfo"></div>
         <div id="timestamp"></div>
         <div id="results-container"></div>
     </div>
     <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 NuraLogix Corporation</p>
-            <p><a href="https://nuralogix.ai">nuralogix.ai</a></p>
-            <p>Try Anura&reg; Lite on your iPhone or Android Phone:</p>
-            <div class="download-buttons">
-                <a href="https://apps.apple.com/us/app/id1358813934" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Download_on_the_App_Store_RGB_blk.svg" alt="Download on the App Store">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=ai.nuralogix.nura" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-                </a>
-            </div>
-        </div>
+        <div id="disclaimer-container"></div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -565,8 +536,12 @@
             let decodedResults = decodeNuraQRString(encodedResultsQueryString)
 
             let lang = getLangFromBrowser();
+
+            renderHeader(lang);
             renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
+            renderDisclaimer(lang);
         });
+
 
         /**
          * Retrieves query string results from the current URL.

@@ -496,3 +496,41 @@ function loadSVGIcon(iconElement, iconName) {
 function shouldShowInfoIcon(pointKey) {
     return pointKey !== 'AGE' && pointKey !== 'BODY_TEMPERATURE' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
 }
+
+/**
+ * Renders the header.
+ * @param {string} lang - The language code.
+ */
+function renderHeader(lang) {
+    let header = document.getElementById('main-header');
+    let title = document.createElement('h1');
+    title.textContent = localize("APP_NAME", lang);
+    header.appendChild(title);
+}
+
+/**
+ * Renders the disclaimer.
+ * @param {string} lang - The language code.
+ */
+function renderDisclaimer(lang) {
+    let container = document.getElementById('disclaimer-container');
+    let p = document.createElement('p');
+    p.className = "footer-disclaimer";
+    p.style.fontSize = '16px';
+    
+    let icon = document.createElement('img');
+    icon.src = 'assets/imgs/warning32.png';
+    icon.alt = 'Warning';
+    icon.style.width = '18px';
+    icon.style.height = '18px';
+    icon.style.marginRight = '5px';
+    icon.style.verticalAlign = 'middle';
+    icon.style.display = 'inline-block';
+    
+    let text = document.createTextNode(localize("RESULTS_DISCLAIMER", lang));
+    
+    p.appendChild(icon);
+    p.appendChild(text);
+    container.appendChild(p);
+}
+
