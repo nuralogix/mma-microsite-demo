@@ -13,8 +13,8 @@ To test this project locally, follow the instructions below.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/nuralogix/mma-device-results-demo.git
-cd mma-device-results-demo
+git clone https://github.com/nuralogix/mma-microsite-demo.git
+cd mma-microsite-demo
 ```
 
 ### 2. Start a Local HTTP Server
