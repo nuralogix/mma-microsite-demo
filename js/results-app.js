@@ -515,8 +515,21 @@ function renderHeader(lang) {
 function renderDisclaimer(lang) {
     let container = document.getElementById('disclaimer-container');
     let p = document.createElement('p');
-    p.textContent = localize("RESULTS_DISCLAIMER", lang);
     p.className = "footer-disclaimer";
+    
+    let icon = document.createElement('img');
+    icon.src = 'assets/imgs/warning32.png';
+    icon.alt = 'Warning';
+    icon.style.width = '15px';
+    icon.style.height = '15px';
+    icon.style.marginRight = '5px';
+    icon.style.verticalAlign = 'middle';
+    icon.style.display = 'inline-block';
+    
+    let text = document.createTextNode(localize("RESULTS_DISCLAIMER", lang));
+    
+    p.appendChild(icon);
+    p.appendChild(text);
     container.appendChild(p);
 }
 
