@@ -516,12 +516,13 @@ function renderDisclaimer(lang) {
     let container = document.getElementById('disclaimer-container');
     let p = document.createElement('p');
     p.className = "footer-disclaimer";
+    p.style.fontSize = '16px';
     
     let icon = document.createElement('img');
     icon.src = 'assets/imgs/warning32.png';
     icon.alt = 'Warning';
-    icon.style.width = '15px';
-    icon.style.height = '15px';
+    icon.style.width = '18px';
+    icon.style.height = '18px';
     icon.style.marginRight = '5px';
     icon.style.verticalAlign = 'middle';
     icon.style.display = 'inline-block';
