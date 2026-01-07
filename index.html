@@ -560,8 +560,16 @@
         function getLangFromBrowser() {
             let lang = navigator.language
             console.log("current browser language: " + lang);
-            if (lang.includes('-')) {
-                return lang.split('-')[0];
+            if (lang) {
+                if (lang.includes('zh')) {
+                    return 'zh';
+                } else if (lang.includes('ko')) {
+                    return 'ko';
+                } else if (lang.includes('-')) {
+                    return lang.split('-')[0];
+                } else {
+                    return lang;
+                }
             } else {
                 return "en";
             }
