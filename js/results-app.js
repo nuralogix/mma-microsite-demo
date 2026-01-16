@@ -84,6 +84,12 @@ function renderResults(results, definitions, sections, pageLocale) {
 
             let result = getPointResult(pointID, results);
 
+            if(pointID === "TEMPERATURE_SENSOR" && (isNaN(result) || result === 0)) {
+                // Fallback to BODY_TEMPERATURE if TEMPERATURE_SENSOR is not available
+                console.log("Falling back to BODY_TEMPERATURE for temperature reading.");
+                result = getPointResult("BODY_TEMPERATURE", results);
+            }
+
             let pointDefinition = definitions[pointID]
             if (!pointDefinition) continue;
 
@@ -494,7 +500,7 @@ function loadSVGIcon(iconElement, iconName) {
 }
 
 function shouldShowInfoIcon(pointKey) {
-    return pointKey !== 'AGE' && pointKey !== 'BODY_TEMPERATURE' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
+    return pointKey !== 'AGE' && pointKey !== 'TEMPERATURE_SENSOR' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
 }
 
 /**

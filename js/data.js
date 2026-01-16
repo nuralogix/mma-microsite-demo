@@ -9,7 +9,7 @@ const DeepAffexWebResultsData = (() => {
                 "BR_BPM",
                 "BP_SYSTOLIC",
                 "BP_DIASTOLIC",
-                "BODY_TEMPERATURE"
+                "TEMPERATURE_SENSOR"
             ]
         },
         {
@@ -989,7 +989,7 @@ const DeepAffexWebResultsData = (() => {
                     }
                 }
             },
-            "BODY_TEMPERATURE": {
+            "TEMPERATURE_SENSOR": {
                 "scales": {
                     "default": {
                         "segments": [
@@ -1023,7 +1023,7 @@ const DeepAffexWebResultsData = (() => {
                 },
                 "decimalPlaces": 1,
                 "upperBound": 41.5,
-                "key": "BODY_TEMPERATURE",
+                "key": "TEMPERATURE_SENSOR",
                 "units": "CELSIUS",
                 "lowerBound": 35
             },
@@ -1847,7 +1847,7 @@ const DeepAffexWebResultsData = (() => {
             "ko": "혈압",
             "zh": "血压"
         },
-        "DFXPOINT_TITLE:BODY_TEMPERATURE": {
+        "DFXPOINT_TITLE:TEMPERATURE_SENSOR": {
             "default": "Body Temperature",
             "ko": "체온",
             "zh": "体温"
