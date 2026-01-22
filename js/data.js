@@ -2674,6 +2674,10 @@ R (血管阻力) x C (动脉顺应性)。
 在静息状态下测量时，该指数可作为心血管健康的一个指标，因为它与血管硬度密切相关。
 
 通常情况下，Tau值高的人比Tau值低的人有更好的血管健康状况。此外，某些活动可导致Tau值立即发生变化 (例如饮酒、吸烟)。`
+        },
+        "DFXPOINT_DESC:TEMPERATURE_SENSOR": {
+            "default": `The temperature sensor mainly collects the temperature of the facial and neck areas, with priority given to capturing the highest temperature in these regions. During measurement, within the effective detection distance (15-50cm indoors), the module continuously collects temperature data approximately 4 times per second. The final displayed temperature is the highest value among the series of temperatures collected during the measurement process, ensuring accurate temperature measurement.`,
+            "zh": `温度传感器主要采集面部和颈部区域的温度，且优先捕捉该区域最高温；测量时，模块在有效检测距离内（室内 15-50cm），每秒约 4 次连续采集温度数据，最终显示的温度，是测量过程中所采集到的一系列温度中的最高值，保障测温精准。`
         }
     };
 

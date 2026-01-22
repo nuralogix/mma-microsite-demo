@@ -500,7 +500,7 @@ function loadSVGIcon(iconElement, iconName) {
 }
 
 function shouldShowInfoIcon(pointKey) {
-    return pointKey !== 'AGE' && pointKey !== 'TEMPERATURE_SENSOR' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
+    return pointKey !== 'AGE' && pointKey !== 'VITAL_SCORE' && pointKey !== 'PHYSIO_SCORE' && pointKey !== 'MENTAL_SCORE' && pointKey !== 'PHYSICAL_SCORE' && pointKey !== 'RISKS_SCORE';
 }
 
 /**
