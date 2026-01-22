@@ -996,7 +996,7 @@ const DeepAffexWebResultsData = (() => {
                             {
                                 "color": "lightGreen",
                                 "max": 36.5,
-                                "min": 35
+                                "min": 30
                             },
                             {
                                 "min": 36.5,
@@ -1004,19 +1004,19 @@ const DeepAffexWebResultsData = (() => {
                                 "color": "green"
                             },
                             {
-                                "min": 38.3,
-                                "max": 40,
+                                "min": 37.5,
+                                "max": 39.5,
                                 "color": "yellow"
                             },
                             {
-                                "min": 40,
+                                "min": 39.5,
                                 "max": 41.5,
                                 "color": "lightRed"
                             },
                             {
-                                "max": 100,
+                                "max": 45,
                                 "color": "red",
-                                "min": 75
+                                "min": 41.5
                             }
                         ]
                     }
