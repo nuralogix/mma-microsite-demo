@@ -93,6 +93,12 @@ function renderResults(results, definitions, sections, pageLocale) {
             let pointDefinition = definitions[pointID]
             if (!pointDefinition) continue;
 
+            // Skip rendering if result is not available for these new points
+            if ((pointID === "VITALITY" || pointID === "SLEEP_QUALITY" || pointID === "ANXIETY_INDEX") && 
+                (result === undefined || isNaN(result))) {
+                continue;
+            }
+
             renderResultRow(result, definitions[pointID], container, pageLocale);
 
             numberOfChildren += 1;
