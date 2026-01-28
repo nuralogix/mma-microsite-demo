@@ -1416,7 +1416,8 @@ const DeepAffexWebResultsData = (() => {
                 "units": "",
                 "upperBound": 5,
                 "lowerBound": 1,
-                "decimalPlaces": 0
+                "decimalPlaces": 0,
+                "hideWhenMissing": true
             },
             "SLEEP_QUALITY": {
                 "scales": {
@@ -1454,7 +1455,8 @@ const DeepAffexWebResultsData = (() => {
                 "units": "",
                 "upperBound": 5,
                 "lowerBound": 1,
-                "decimalPlaces": 0
+                "decimalPlaces": 0,
+                "hideWhenMissing": true
             },
             "ANXIETY_INDEX": {
                 "scales": {
@@ -1492,7 +1494,8 @@ const DeepAffexWebResultsData = (() => {
                 "units": "",
                 "upperBound": 5,
                 "lowerBound": 1,
-                "decimalPlaces": 0
+                "decimalPlaces": 0,
+                "hideWhenMissing": true
             },
             "SNR": {
                 "decimalPlaces": 1,
@@ -2827,7 +2830,7 @@ R (血管阻力) x C (动脉顺应性)。
         "DFXPOINT_DESC:SLEEP_QUALITY": {
             "default": `## Definition
 
-*Sleep Quality Index* is a measure of the subject's Sleep Quality that quantifies the user's Sleep Quality level on a 5-point scale, from poor sleep quality (Level 1) to excellent sleep quality (Level 5).
+*Sleep Quality Index* is a measure of the user's Sleep Quality that quantifies the Sleep Quality level on a 5-point scale, from poor sleep quality (Level 1) to excellent sleep quality (Level 5).
 
 ## Background
 
