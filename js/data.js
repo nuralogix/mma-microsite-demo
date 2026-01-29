@@ -1381,120 +1381,120 @@ const DeepAffexWebResultsData = (() => {
                 "decimalPlaces": 1
             },
             "VITALITY": {
+                "key": "VITALITY",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
                 "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 2,
                                 "min": 1,
-                                "color": "red"
+                                "color": "red",
+                                "max": 2
                             },
                             {
                                 "min": 2,
-                                "color": "lightRed",
-                                "max": 3
+                                "max": 3,
+                                "color": "lightRed"
                             },
                             {
-                                "max": 4,
+                                "min": 3,
                                 "color": "yellow",
-                                "min": 3
+                                "max": 4
                             },
                             {
                                 "color": "lightGreen",
-                                "max": 5,
-                                "min": 4
+                                "min": 4,
+                                "max": 5
                             },
                             {
-                                "max": 5,
                                 "color": "green",
-                                "min": 5
+                                "min": 5,
+                                "max": 6
                             }
                         ]
                     }
                 },
-                "key": "VITALITY",
-                "units": "",
-                "upperBound": 5,
-                "lowerBound": 1,
-                "decimalPlaces": 0,
                 "hideWhenMissing": true
             },
             "SLEEP_QUALITY": {
+                "key": "SLEEP_QUALITY",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
                 "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 2,
                                 "min": 1,
-                                "color": "red"
+                                "color": "red",
+                                "max": 2
                             },
                             {
                                 "min": 2,
-                                "color": "lightRed",
-                                "max": 3
+                                "max": 3,
+                                "color": "lightRed"
                             },
                             {
-                                "max": 4,
+                                "min": 3,
                                 "color": "yellow",
-                                "min": 3
+                                "max": 4
                             },
                             {
                                 "color": "lightGreen",
-                                "max": 5,
-                                "min": 4
+                                "min": 4,
+                                "max": 5
                             },
                             {
-                                "max": 5,
                                 "color": "green",
-                                "min": 5
+                                "min": 5,
+                                "max": 6
                             }
                         ]
                     }
                 },
-                "key": "SLEEP_QUALITY",
-                "units": "",
-                "upperBound": 5,
-                "lowerBound": 1,
-                "decimalPlaces": 0,
                 "hideWhenMissing": true
             },
             "ANXIETY_INDEX": {
+                "key": "ANXIETY_INDEX",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
                 "scales": {
                     "default": {
                         "segments": [
                             {
-                                "max": 2,
                                 "min": 1,
-                                "color": "green"
+                                "color": "green",
+                                "max": 2
                             },
                             {
                                 "min": 2,
-                                "color": "lightGreen",
-                                "max": 3
+                                "max": 3,
+                                "color": "lightGreen"
                             },
                             {
-                                "max": 4,
+                                "min": 3,
                                 "color": "yellow",
-                                "min": 3
+                                "max": 4
                             },
                             {
                                 "color": "lightRed",
-                                "max": 5,
-                                "min": 4
+                                "min": 4,
+                                "max": 5
                             },
                             {
-                                "max": 5,
                                 "color": "red",
-                                "min": 5
+                                "min": 5,
+                                "max": 6
                             }
                         ]
                     }
                 },
-                "key": "ANXIETY_INDEX",
-                "units": "",
-                "upperBound": 5,
-                "lowerBound": 1,
-                "decimalPlaces": 0,
                 "hideWhenMissing": true
             },
             "SNR": {
