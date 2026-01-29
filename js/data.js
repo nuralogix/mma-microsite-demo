@@ -16,13 +16,16 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_PHYSIOLOGICAL",
             "pointsIDs": [
                 "HRV_SDNN",
-                "BP_RPP"
+                "BP_RPP",
+                "VITALITY"
             ]
         },
         {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_MENTAL",
             "pointsIDs": [
-                "MSI"
+                "MSI",
+                "SLEEP_QUALITY",
+                "ANXIETY_INDEX"
             ]
         },
         {
@@ -1377,6 +1380,123 @@ const DeepAffexWebResultsData = (() => {
                 "lowerBound": 1,
                 "decimalPlaces": 1
             },
+            "VITALITY": {
+                "key": "VITALITY",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
+                "scales": {
+                    "default": {
+                        "segments": [
+                            {
+                                "min": 1,
+                                "color": "red",
+                                "max": 2
+                            },
+                            {
+                                "min": 2,
+                                "max": 3,
+                                "color": "lightRed"
+                            },
+                            {
+                                "min": 3,
+                                "color": "yellow",
+                                "max": 4
+                            },
+                            {
+                                "color": "lightGreen",
+                                "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
+                                "max": 6
+                            }
+                        ]
+                    }
+                },
+                "hideWhenMissing": true
+            },
+            "SLEEP_QUALITY": {
+                "key": "SLEEP_QUALITY",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
+                "scales": {
+                    "default": {
+                        "segments": [
+                            {
+                                "min": 1,
+                                "color": "red",
+                                "max": 2
+                            },
+                            {
+                                "min": 2,
+                                "max": 3,
+                                "color": "lightRed"
+                            },
+                            {
+                                "min": 3,
+                                "color": "yellow",
+                                "max": 4
+                            },
+                            {
+                                "color": "lightGreen",
+                                "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "green",
+                                "min": 5,
+                                "max": 6
+                            }
+                        ]
+                    }
+                },
+                "hideWhenMissing": true
+            },
+            "ANXIETY_INDEX": {
+                "key": "ANXIETY_INDEX",
+                "units": "",
+                "upperBound": 5.9,
+                "lowerBound": 1,
+                "decimalPlaces": 1,
+                "scales": {
+                    "default": {
+                        "segments": [
+                            {
+                                "min": 1,
+                                "color": "green",
+                                "max": 2
+                            },
+                            {
+                                "min": 2,
+                                "max": 3,
+                                "color": "lightGreen"
+                            },
+                            {
+                                "min": 3,
+                                "color": "yellow",
+                                "max": 4
+                            },
+                            {
+                                "color": "lightRed",
+                                "min": 4,
+                                "max": 5
+                            },
+                            {
+                                "color": "red",
+                                "min": 5,
+                                "max": 6
+                            }
+                        ]
+                    }
+                },
+                "hideWhenMissing": true
+            },
             "SNR": {
                 "decimalPlaces": 1,
                 "units": "DECIBELS",
@@ -1871,6 +1991,18 @@ const DeepAffexWebResultsData = (() => {
             "default": "Mental Stress Index",
             "ko": "스트레스 지수",
             "zh": "精神压力指数"
+        },
+        "DFXPOINT_TITLE:VITALITY": {
+            "default": "Vitality Index",
+            "zh": "活力指数"
+        },
+        "DFXPOINT_TITLE:SLEEP_QUALITY": {
+            "default": "Sleep Quality Index",
+            "zh": "睡眠质量指数"
+        },
+        "DFXPOINT_TITLE:ANXIETY_INDEX": {
+            "default": "Anxiety Index",
+            "zh": "焦虑指数"
         },
         "DFXPOINT_TITLE:BMI_CALC": {
             "default": "Body Mass Index",
@@ -2678,6 +2810,54 @@ R (血管阻力) x C (动脉顺应性)。
         "DFXPOINT_DESC:TEMPERATURE_SENSOR": {
             "default": `The temperature sensor mainly collects the temperature of the facial and neck areas, with priority given to capturing the highest temperature in these regions. During measurement, within the effective detection distance (15-50cm indoors), the module continuously collects temperature data approximately 4 times per second. The final displayed temperature is the highest value among the series of temperatures collected during the measurement process, ensuring accurate temperature measurement.`,
             "zh": `温度传感器主要采集面部和颈部区域的温度，且优先捕捉该区域最高温；测量时，模块在有效检测距离内（室内 15-50cm），每秒约 4 次连续采集温度数据，最终显示的温度，是测量过程中所采集到的一系列温度中的最高值，保障测温精准。`
+        },
+        "DFXPOINT_DESC:VITALITY": {
+            "default": `## Definition
+
+*Vitality Index* is a measure of an individual's cardiovascular health and overall vitality, and is presented on a 5-point scale, from poor (Level 1) to excellent (Level 5).
+
+## Background
+
+*Vitality Index* offers an assessment of an individual's cardiovascular health and overall vitality by integrating key physiological indicators. It incorporates cardiac workload, a widely recognized measure of the heart's oxygen demand and the stress placed upon it, reflecting the heart's pumping efficiency. The index also includes vascular capacity, which quantifies the adaptability and health of the blood vessels, indicating their ability to expand and contract to meet the body's varying blood flow needs. Furthermore, by integrating Body Mass Index, Heart Rate Variability, and Age, the Vitality Index accounts for crucial factors that significantly influence cardiovascular health and are indicative of overall physiological well-being. This multi-faceted approach provides a holistic view of an individual's cardiovascular vitality, highlighting areas of strength and potential concern.`,
+            "zh": `## 定义
+
+*活力指数*是一种用于衡量个体心血管健康状况与整体活力水平的指标，采用 5 分制评分，从健康状况不佳（1 级）到健康状况优异（5 级）不等。
+
+## 背景
+
+*活力指数*通过整合多项关键生理指标，实现对个体心血管健康及整体活力的综合评估。该指数纳入了心脏负荷这一指标 —— 心脏负荷是衡量心脏耗氧量与承受压力的公认指标，能够反映心脏的泵血效率；同时还纳入了血管容量指标，这一指标可量化血管的适应能力与健康状态，体现血管根据人体血流需求变化进行舒张与收缩的能力。此外，活力指数还结合了身体质量指数、心率变异性及年龄三项因素，这些均是对心血管健康具有重要影响、且能反映人体整体生理健康状态的关键指标。这种多维度评估方法，能够全面展现个体的心血管活力水平，清晰指出其健康优势与潜在隐患。`
+        },
+        "DFXPOINT_DESC:SLEEP_QUALITY": {
+            "default": `## Definition
+
+*Sleep Quality Index* is a measure of the user's Sleep Quality that quantifies the Sleep Quality level on a 5-point scale, from poor sleep quality (Level 1) to excellent sleep quality (Level 5).
+
+## Background
+
+*Sleep Quality Index* is based on heart rate variability (HRV) features, specifically SDNN (standard deviation of NN intervals) and pNN50 (percentage of successive NN intervals that differ by more than 50ms), which are well-established indicators of autonomic nervous system activity and its role in sleep regulation. In conjunction with HRV, the Sleep Quality Index incorporates heart rate and blood pressure measurements, both of which are significantly influenced by sleep stages and overall sleep quality. By combining these parameters, the Sleep Quality Index offers a reflection of an individual's sleep, building upon existing research demonstrating strong correlations between these physiological features and various aspects of sleep quality.`,
+            "zh": `## 定义
+
+*睡眠质量指数*是一种用于衡量受试者睡眠质量的指标，采用 5 分制量化用户的睡眠质量等级，涵盖从睡眠质量差（1 级）到睡眠质量优（5 级）的区间。
+
+## 背景
+
+*睡眠质量指数*以心率变异性相关特征为核心基础，具体包括正常窦性心搏间期标准差（SDNN）与相邻正常窦性心搏间期差值大于 50 毫秒的百分比（pNN50）。这两项指标是评估自主神经系统活性的成熟指标，同时也与自主神经系统在睡眠调节中发挥的作用密切相关。除心率变异性指标外，睡眠质量指数还纳入了心率与血压两项测量数据 —— 这两项指标均会受到睡眠阶段与整体睡眠质量的显著影响。通过整合上述参数，睡眠质量指数能够客观反映个体的睡眠状况，其评估依据是已有研究中证实的 "这些生理特征与睡眠质量各维度存在高度相关性" 这一结论。`
+        },
+        "DFXPOINT_DESC:ANXIETY_INDEX": {
+            "default": `## Definition
+
+*Anxiety Index* is a measure of an individual's underlying, long-range anxiety level and is presented on a 5-point scale, from excellent (Level 1) to poor (Level 5).
+
+## Background
+
+*Anxiety Index* is a combined physiological measure that estimates a person's long-term, baseline anxiety rather than short-term stress. It integrates heart rate, breathing rate, blood pressure, and heart rate variability signals linked to autonomic nervous system activity into a single score. By synthesizing these metrics, the index provides insight into chronic or trait-like anxiety and can be used to track underlying anxiety trends over time.`,
+            "zh": `## 定义
+
+*焦虑指数*是一种用于衡量个体潜在长期焦虑水平的指标，采用 5 分制评分，其中 1 级代表焦虑程度极低（状态良好），5 级代表焦虑程度极高（状态不佳）。
+
+## 背景
+
+*焦虑指数*是一项综合性生理评估指标，其评估对象是个体的长期基线焦虑水平，而非短期压力状态。该指数整合了与自主神经系统活性相关的四项生理信号：心率、呼吸频率、血压及心率变异性，并将这些信号转化为单一评分。通过综合分析上述各项指标，焦虑指数能够揭示个体的慢性焦虑或特质性焦虑状态，同时也可用于追踪个体潜在焦虑水平的长期变化趋势。`
         }
     };
 

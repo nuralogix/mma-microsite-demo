@@ -93,6 +93,11 @@ function renderResults(results, definitions, sections, pageLocale) {
             let pointDefinition = definitions[pointID]
             if (!pointDefinition) continue;
 
+            // Skip rendering if result is not available and point is configured to hide when missing
+            if (pointDefinition.hideWhenMissing && (result === undefined || isNaN(result))) {
+                continue;
+            }
+
             renderResultRow(result, definitions[pointID], container, pageLocale);
 
             numberOfChildren += 1;
