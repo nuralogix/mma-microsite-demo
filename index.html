@@ -540,6 +540,27 @@
             renderHeader(lang);
             renderResults(decodedResults, definitions.pointDefinitions, sections, lang);
             renderDisclaimer(lang);
+
+            // Log profile input for debugging
+            let pointsIDs = [
+                'INPUT_AGE',
+                'INPUT_HEIGHT', 
+                'INPUT_WEIGHT', 
+                'INPUT_GENDER', // Male = 1, female = 2
+                'INPUT_DIABETES', // None = 3, Type1 = 4, Type2 = 5
+                'INPUT_SMOKING', // YES = 1, NO = 0
+                'INPUT_BP_MEDICATION' // YES = 1, NO = 0
+            ];
+            pointsIDs.forEach(id => {
+                let result = getPointResult(id, decodedResults);
+                console.log(`Profile input - ${id}: ${result}`);
+            });
+
+            let measurementID = getMeasurementIDFromQueryString();
+            console.log("measurementID from query string: " + measurementID);
+            let partnerID = getPartnerIDFromQueryString();
+            console.log("partnerID from query string: " + partnerID);
+
         });
 
 
@@ -551,6 +572,26 @@
             const urlParams = new URLSearchParams(window.location.search)
             const resultQuery = urlParams.get('r')
             return resultQuery
+        }
+
+        /**
+         * Retrieves the measurement ID from the current URL query string.
+         * @returns {string|null} The measurement ID if present.
+         */
+        function getMeasurementIDFromQueryString() {
+            const urlParams = new URLSearchParams(window.location.search)
+            const measurementID = urlParams.get('mid')
+            return measurementID
+        }
+
+        /**
+         * Retrieves the partner ID from the current URL query string.
+         * @returns {string|null} The partner ID if present.
+         */
+        function getPartnerIDFromQueryString() {
+            const urlParams = new URLSearchParams(window.location.search)
+            const partnerID = urlParams.get('pid')
+            return partnerID
         }
 
         /**
