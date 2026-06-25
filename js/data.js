@@ -35,10 +35,7 @@ const DeepAffexWebResultsData = (() => {
                 "AGE_CVM",
                 "BMI_CALC",
                 "ABSI",
-                "WAIST_TO_HEIGHT",
-                "HEIGHT",
-                "WEIGHT",
-                "WAIST_CIRCUM"
+                "WAIST_TO_HEIGHT"
             ]
         },
         {
