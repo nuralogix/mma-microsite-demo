@@ -2582,36 +2582,36 @@ Cardiovascular Metabolic Age compares the subject's overall cardiovascular and m
         "DFXPOINT_DESC:HEIGHT": {
             "default": `## Definition
 
-*Estimated Height* is the DeepAffex Cloud's estimate of the subject's height in centimetres.
+*Estimated Height* is an estimate of the subject's height in centimetres.
 
 *There is no interpretation table for HEIGHT.*`,
             "zh": `## 定义
 
-*预测身高*是 DeepAffex Cloud 对受试者身高的估算值，单位为厘米。
+*预测身高*是对受试者身高的估算值，单位为厘米。
 
 *HEIGHT 没有解读表。*`
         },
         "DFXPOINT_DESC:WEIGHT": {
             "default": `## Definition
 
-*Estimated Weight* is the DeepAffex Cloud's estimate of the subject's weight in kilograms.
+*Estimated Weight* is an estimate of the subject's weight in kilograms.
 
 *There is no interpretation table for WEIGHT.*`,
             "zh": `## 定义
 
-*预测体重*是 DeepAffex Cloud 对受试者体重的估算值，单位为千克。
+*预测体重*是对受试者体重的估算值，单位为千克。
 
 *WEIGHT 没有解读表。*`
         },
         "DFXPOINT_DESC:WAIST_CIRCUM": {
             "default": `## Definition
 
-*Waist Circumference* is the subject's waist circumference in centimetres as calculated by the DeepAffex Cloud using the measurement's user profile information. It will be estimated by the DeepAffex Cloud if user profile information is not provided.
+*Waist Circumference* is the subject's waist circumference in centimetres using the measurement's user profile information. It will be estimated if user profile information is not provided.
 
 *There is no interpretation table for WAIST_CIRCUM.*`,
             "zh": `## 定义
 
-*腰围*是 DeepAffex Cloud 使用本次测量的用户资料计算出的受试者腰围，单位为厘米。如果未提供用户资料，DeepAffex Cloud 将对腰围进行估算。
+*腰围*是使用本次测量的用户资料计算出的受试者腰围，单位为厘米。如果未提供用户资料时将对腰围进行估算。
 
 *WAIST_CIRCUM 没有解读表。*`
         },
