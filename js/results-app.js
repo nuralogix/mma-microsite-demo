@@ -82,6 +82,18 @@ function renderResults(results, definitions, sections, pageLocale) {
                 continue;
             }
 
+            if (pointID === "BP_CVD" && hasMultiYearRiskResult(results, definitions)) {
+                continue
+            }
+
+            if (pointID === "CVD_MULTI_YEAR_RISK_PROBS") {
+                let pointDefinition = definitions[pointID]
+                if (pointDefinition && renderMultiYearRiskRow(results, pointDefinition, container, pageLocale)) {
+                    numberOfChildren += 1
+                }
+                continue
+            }
+
             let result = getPointResult(pointID, results);
 
             if(pointID === "TEMPERATURE_SENSOR" && (isNaN(result) || result === 0)) {
@@ -110,6 +122,24 @@ function renderResults(results, definitions, sections, pageLocale) {
 }
 
 function getPointResult(pointID, results) {
+    return getPointResults(pointID, results)[0]
+}
+
+function getPointResults(pointID, results) {
+    let count = getRawPointResult(`${pointID}_COUNT`, results)
+    if (Number.isFinite(count)) {
+        let resultCount = Math.max(0, Math.trunc(count))
+        return Array.from({ length: resultCount }, (_, index) => getRawPointResult(`${pointID}_${index}`, results))
+    }
+
+    return [getRawPointResult(pointID, results)]
+}
+
+function hasPointResultValue(value) {
+    return Number.isFinite(value)
+}
+
+function getRawPointResult(pointID, results) {
     return results[convertPointIDStringToHashString(pointID)]
 }
 
@@ -209,7 +239,7 @@ function renderResultRow(result, pointDefinition, container, locale) {
 
     let iconEl = document.createElement('div');
     iconEl.className = 'result-icon';
-    loadSVGIcon(iconEl, pointDefinition.key);
+    loadSVGIcon(iconEl, pointDefinition.iconKey || pointDefinition.key);
 
     let nameLabel = document.createElement('span')
     nameLabel.className = "result-name"
@@ -248,6 +278,139 @@ function renderResultRow(result, pointDefinition, container, locale) {
     container.appendChild(resultEl)
 
     return resultEl
+}
+
+/**
+ * Renders the 1-to-20-year cardiovascular disease risk series as one result row.
+ * @returns {boolean} Whether a row was rendered.
+ */
+function hasMultiYearRiskResult(results, definitions) {
+    let pointDefinition = definitions["CVD_MULTI_YEAR_RISK_PROBS"]
+    return Boolean(pointDefinition && getMultiYearRiskValues(results, pointDefinition).some(hasPointResultValue))
+}
+
+function getMultiYearRiskValues(results, pointDefinition) {
+    let values = getPointResults(pointDefinition.key, results)
+    if (values.length === 1 && !hasPointResultValue(values[0])) {
+        values = Array.from({ length: 20 }, (_, index) => {
+            return getRawPointResult(`${pointDefinition.key}_${index + 1}`, results)
+        })
+    }
+
+    return values
+}
+
+function renderMultiYearRiskRow(results, pointDefinition, container, locale) {
+    let values = getMultiYearRiskValues(results, pointDefinition)
+
+    const firstAvailableIndex = values.findIndex(hasPointResultValue)
+    if (firstAvailableIndex === -1) {
+        return false
+    }
+
+    let selectedIndex = values.length > 1 ? Math.min(9, values.length - 1) : firstAvailableIndex
+    let selectedYear = selectedIndex + 1
+    let selectedValue = values[selectedIndex]
+    let resultEl = document.createElement('div')
+    resultEl.className = 'result multi-year-result'
+    resultEl.dataset.pointKey = pointDefinition.key
+
+    let mainRow = document.createElement('div')
+    mainRow.className = 'multi-year-main-row'
+
+    let iconEl = document.createElement('div')
+    iconEl.className = 'result-icon'
+    loadSVGIcon(iconEl, pointDefinition.iconKey || pointDefinition.key)
+    mainRow.appendChild(iconEl)
+
+    let nameWrapper = document.createElement('div')
+    nameWrapper.className = 'result-name-wrapper'
+    let nameLabel = document.createElement('span')
+    nameLabel.className = 'result-name'
+    nameLabel.textContent = localize(`DFXPOINT_TITLE:${pointDefinition.key}`, locale)
+    nameWrapper.appendChild(nameLabel)
+
+    let openDialog = () => {
+        let dialogOptions = PointInfoDialog.buildPointInfoDialogOptions(pointDefinition, selectedValue, locale)
+        PointInfoDialog.showPointInfoDialog(dialogOptions.title, dialogOptions.content, locale)
+    }
+    nameWrapper.appendChild(PointInfoDialog.createResultInfoIcon(locale, openDialog))
+    mainRow.appendChild(nameWrapper)
+
+    let valueEl = document.createElement('span')
+    valueEl.className = 'result-value'
+    mainRow.appendChild(valueEl)
+    resultEl.appendChild(mainRow)
+
+    let yearLabel
+    let slider
+    if (values.length > 1) {
+        yearLabel = document.createElement('div')
+        yearLabel.className = 'multi-year-selected-label'
+        resultEl.appendChild(yearLabel)
+
+        let sliderRow = document.createElement('div')
+        sliderRow.className = 'multi-year-slider-row'
+        let minLabel = document.createElement('span')
+        minLabel.textContent = '1'
+        minLabel.setAttribute('aria-hidden', 'true')
+        sliderRow.appendChild(minLabel)
+
+        slider = document.createElement('input')
+        slider.className = 'multi-year-slider'
+        slider.type = 'range'
+        slider.min = '1'
+        slider.max = String(values.length)
+        slider.step = '1'
+        slider.value = String(selectedYear)
+        slider.setAttribute('aria-label', localize('DFXPOINT_CVD_YEAR_SLIDER_LABEL', locale))
+        let tickList = document.createElement('datalist')
+        tickList.id = 'cvd-risk-year-ticks'
+        for (let year = 1; year <= values.length; year++) {
+            let tick = document.createElement('option')
+            tick.value = String(year)
+            tickList.appendChild(tick)
+        }
+        slider.setAttribute('list', tickList.id)
+        sliderRow.appendChild(slider)
+        sliderRow.appendChild(tickList)
+
+        let maxLabel = document.createElement('span')
+        maxLabel.textContent = String(values.length)
+        maxLabel.setAttribute('aria-hidden', 'true')
+        sliderRow.appendChild(maxLabel)
+        resultEl.appendChild(sliderRow)
+    }
+
+    const colorClasses = ['green', 'lightGreen', 'yellow', 'lightRed', 'red', 'grey']
+    const updateSelectedYear = year => {
+        selectedYear = year
+        selectedValue = values[year - 1]
+        valueEl.classList.remove(...colorClasses)
+        valueEl.classList.add(getColorClass(selectedValue, pointDefinition))
+        valueEl.textContent = formatResultValue(
+            selectedValue,
+            pointDefinition.decimalPlaces,
+            pointDefinition.units,
+            locale
+        )
+        let yearTemplate = localize('DFXPOINT_CVD_YEAR_LABEL', locale)
+        if (yearLabel) {
+            yearLabel.textContent = yearTemplate.replace('{year}', year)
+        }
+        if (slider) {
+            slider.setAttribute('aria-valuetext', yearLabel.textContent)
+        }
+    }
+
+    if (slider) {
+        slider.addEventListener('input', event => {
+            updateSelectedYear(Number(event.target.value))
+        })
+    }
+    updateSelectedYear(selectedYear)
+    container.appendChild(resultEl)
+    return true
 }
 
 /**
@@ -544,4 +707,3 @@ function renderDisclaimer(lang) {
     p.appendChild(text);
     container.appendChild(p);
 }
-
