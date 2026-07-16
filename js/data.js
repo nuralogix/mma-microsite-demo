@@ -41,6 +41,7 @@ const DeepAffexWebResultsData = (() => {
         {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_GENERALRISKS",
             "pointsIDs": [
+                "BP_CVD",
                 "CVD_MULTI_YEAR_RISK_PROBS",
                 "BP_HEART_ATTACK",
                 "BP_STROKE"
