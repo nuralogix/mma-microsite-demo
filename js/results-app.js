@@ -82,6 +82,10 @@ function renderResults(results, definitions, sections, pageLocale) {
                 continue;
             }
 
+            if (pointID === "BP_CVD" && hasMultiYearRiskResult(results, definitions)) {
+                continue
+            }
+
             if (pointID === "CVD_MULTI_YEAR_RISK_PROBS") {
                 let pointDefinition = definitions[pointID]
                 if (pointDefinition && renderMultiYearRiskRow(results, pointDefinition, container, pageLocale)) {
@@ -123,12 +127,16 @@ function getPointResult(pointID, results) {
 
 function getPointResults(pointID, results) {
     let count = getRawPointResult(`${pointID}_COUNT`, results)
-    if (typeof count === 'number' && !isNaN(count)) {
+    if (Number.isFinite(count)) {
         let resultCount = Math.max(0, Math.trunc(count))
         return Array.from({ length: resultCount }, (_, index) => getRawPointResult(`${pointID}_${index}`, results))
     }
 
     return [getRawPointResult(pointID, results)]
+}
+
+function hasPointResultValue(value) {
+    return Number.isFinite(value)
 }
 
 function getRawPointResult(pointID, results) {
@@ -276,21 +284,33 @@ function renderResultRow(result, pointDefinition, container, locale) {
  * Renders the 1-to-20-year cardiovascular disease risk series as one result row.
  * @returns {boolean} Whether a row was rendered.
  */
-function renderMultiYearRiskRow(results, pointDefinition, container, locale) {
+function hasMultiYearRiskResult(results, definitions) {
+    let pointDefinition = definitions["CVD_MULTI_YEAR_RISK_PROBS"]
+    return Boolean(pointDefinition && getMultiYearRiskValues(results, pointDefinition).some(hasPointResultValue))
+}
+
+function getMultiYearRiskValues(results, pointDefinition) {
     let values = getPointResults(pointDefinition.key, results)
-    if (values.length === 1 && (values[0] === undefined || isNaN(values[0]))) {
+    if (values.length === 1 && !hasPointResultValue(values[0])) {
         values = Array.from({ length: 20 }, (_, index) => {
             return getRawPointResult(`${pointDefinition.key}_${index + 1}`, results)
         })
     }
 
-    const firstAvailableIndex = values.findIndex(value => typeof value === 'number' && !isNaN(value))
+    return values
+}
+
+function renderMultiYearRiskRow(results, pointDefinition, container, locale) {
+    let values = getMultiYearRiskValues(results, pointDefinition)
+
+    const firstAvailableIndex = values.findIndex(hasPointResultValue)
     if (firstAvailableIndex === -1) {
         return false
     }
 
-    let selectedYear = firstAvailableIndex + 1
-    let selectedValue = values[firstAvailableIndex]
+    let selectedIndex = values.length > 1 ? Math.min(9, values.length - 1) : firstAvailableIndex
+    let selectedYear = selectedIndex + 1
+    let selectedValue = values[selectedIndex]
     let resultEl = document.createElement('div')
     resultEl.className = 'result multi-year-result'
     resultEl.dataset.pointKey = pointDefinition.key
