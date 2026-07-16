@@ -494,15 +494,6 @@ const PointInfoDialog = (() => {
         valueLabel.textContent = formatValueWithUnit(pointValue, pointDefinition, locale)
         indicator.appendChild(valueLabel)
 
-        let labelsRow = document.createElement('div')
-        labelsRow.className = 'point-info-segment-labels'
-        boundaries.forEach(boundary => {
-            let label = document.createElement('span')
-            label.textContent = formatSegmentLabel(boundary, pointDefinition, locale)
-            labelsRow.appendChild(label)
-        })
-        indicator.appendChild(labelsRow)
-
         let trackWrapper = document.createElement('div')
         trackWrapper.className = 'point-info-segments-track-wrapper'
 

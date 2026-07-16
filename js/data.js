@@ -2,6 +2,21 @@
 const DeepAffexWebResultsData = (() => {
     const sections = [
         {
+            "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_OVERALL",
+            "pointsIDs": [
+                "VITAL_SCORE",
+                "PHYSIO_SCORE",
+                "MENTAL_SCORE",
+                "PHYSICAL_SCORE",
+                "BP_CVD",
+                "OVERALL_METABOLIC_RISK_PROB"
+            ],
+            "pointTitleOverrides": {
+                "BP_CVD": "DFXPOINT_TITLE:BP_CVD:OVERALL",
+                "OVERALL_METABOLIC_RISK_PROB": "DFXPOINT_TITLE:OVERALL_METABOLIC_RISK_PROB:OVERALL"
+            }
+        },
+        {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_VITALS",
             "pointsIDs": [
                 "HR_BPM",
@@ -17,6 +32,7 @@ const DeepAffexWebResultsData = (() => {
             "pointsIDs": [
                 "HRV_SDNN",
                 "BP_RPP",
+                "BP_TAU",
                 "VITALITY"
             ]
         },
@@ -32,6 +48,9 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_PHYSICAL",
             "pointsIDs": [
                 "AGE",
+                "HEIGHT",
+                "WEIGHT",
+                "WAIST_CIRCUM",
                 "BMI_CALC",
                 "ABSI",
                 "WAIST_TO_HEIGHT"
@@ -61,17 +80,6 @@ const DeepAffexWebResultsData = (() => {
             "pointsIDs": [
                 "HBA1C_RISK_PROB",
                 "MFBG_RISK_PROB"
-            ]
-        },
-        {
-            "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_OVERALL",
-            "pointsIDs": [
-                "HEALTH_SCORE",
-                "VITAL_SCORE",
-                "PHYSIO_SCORE",
-                "MENTAL_SCORE",
-                "PHYSICAL_SCORE",
-                "RISKS_SCORE"
             ]
         }
     ];
@@ -212,38 +220,18 @@ const DeepAffexWebResultsData = (() => {
             },
             "MENTAL_SCORE": {
                 "key": "MENTAL_SCORE",
-                "units": "",
-                "upperBound": 5,
-                "lowerBound": 1,
+                "units": "PERCENT",
+                "upperBound": 100,
+                "lowerBound": 0,
                 "decimalPlaces": 0,
                 "scales": {
                     "default": {
                         "segments": [
-                            {
-                                "max": 2,
-                                "color": "red",
-                                "min": 1
-                            },
-                            {
-                                "max": 3,
-                                "min": 2,
-                                "color": "lightRed"
-                            },
-                            {
-                                "min": 3,
-                                "color": "yellow",
-                                "max": 4
-                            },
-                            {
-                                "color": "lightGreen",
-                                "min": 4,
-                                "max": 5
-                            },
-                            {
-                                "color": "green",
-                                "min": 5,
-                                "max": 5
-                            }
+                            {"min": 0,  "max": 30,  "color": "red"},
+                            {"min": 30, "max": 50,  "color": "lightRed"},
+                            {"min": 50, "max": 70,  "color": "yellow"},
+                            {"min": 70, "max": 90,  "color": "lightGreen"},
+                            {"min": 90, "max": 100, "color": "green"}
                         ]
                     }
                 }
@@ -1270,39 +1258,19 @@ const DeepAffexWebResultsData = (() => {
                 "scales": {
                     "default": {
                         "segments": [
-                            {
-                                "max": 2,
-                                "color": "red",
-                                "min": 1
-                            },
-                            {
-                                "max": 3,
-                                "min": 2,
-                                "color": "lightRed"
-                            },
-                            {
-                                "min": 3,
-                                "color": "yellow",
-                                "max": 4
-                            },
-                            {
-                                "color": "lightGreen",
-                                "min": 4,
-                                "max": 5
-                            },
-                            {
-                                "color": "green",
-                                "min": 5,
-                                "max": 5
-                            }
+                            {"min": 0,  "max": 30,  "color": "red"},
+                            {"min": 30, "max": 50,  "color": "lightRed"},
+                            {"min": 50, "max": 70,  "color": "yellow"},
+                            {"min": 70, "max": 90,  "color": "lightGreen"},
+                            {"min": 90, "max": 100, "color": "green"}
                         ]
                     }
                 },
-                "lowerBound": 1,
+                "lowerBound": 0,
                 "key": "VITAL_SCORE",
                 "decimalPlaces": 0,
-                "units": "",
-                "upperBound": 5
+                "units": "PERCENT",
+                "upperBound": 100
             },
             "BP_HEART_ATTACK": {
                 "key": "BP_HEART_ATTACK",
@@ -1507,37 +1475,17 @@ const DeepAffexWebResultsData = (() => {
             },
             "PHYSIO_SCORE": {
                 "key": "PHYSIO_SCORE",
-                "lowerBound": 1,
-                "units": "",
-                "upperBound": 5,
+                "lowerBound": 0,
+                "units": "PERCENT",
+                "upperBound": 100,
                 "scales": {
                     "default": {
                         "segments": [
-                            {
-                                "max": 2,
-                                "color": "red",
-                                "min": 1
-                            },
-                            {
-                                "max": 3,
-                                "min": 2,
-                                "color": "lightRed"
-                            },
-                            {
-                                "min": 3,
-                                "color": "yellow",
-                                "max": 4
-                            },
-                            {
-                                "color": "lightGreen",
-                                "min": 4,
-                                "max": 5
-                            },
-                            {
-                                "color": "green",
-                                "min": 5,
-                                "max": 5
-                            }
+                            {"min": 0,  "max": 30,  "color": "red"},
+                            {"min": 30, "max": 50,  "color": "lightRed"},
+                            {"min": 50, "max": 70,  "color": "yellow"},
+                            {"min": 70, "max": 90,  "color": "lightGreen"},
+                            {"min": 90, "max": 100, "color": "green"}
                         ]
                     }
                 },
@@ -1545,38 +1493,18 @@ const DeepAffexWebResultsData = (() => {
             },
             "PHYSICAL_SCORE": {
                 "key": "PHYSICAL_SCORE",
-                "upperBound": 5,
-                "lowerBound": 1,
+                "upperBound": 100,
+                "lowerBound": 0,
                 "decimalPlaces": 0,
-                "units": "",
+                "units": "PERCENT",
                 "scales": {
                     "default": {
                         "segments": [
-                            {
-                                "max": 2,
-                                "color": "red",
-                                "min": 1
-                            },
-                            {
-                                "max": 3,
-                                "min": 2,
-                                "color": "lightRed"
-                            },
-                            {
-                                "min": 3,
-                                "color": "yellow",
-                                "max": 4
-                            },
-                            {
-                                "color": "lightGreen",
-                                "min": 4,
-                                "max": 5
-                            },
-                            {
-                                "color": "green",
-                                "min": 5,
-                                "max": 5
-                            }
+                            {"min": 0,  "max": 30,  "color": "red"},
+                            {"min": 30, "max": 50,  "color": "lightRed"},
+                            {"min": 50, "max": 70,  "color": "yellow"},
+                            {"min": 70, "max": 90,  "color": "lightGreen"},
+                            {"min": 90, "max": 100, "color": "green"}
                         ]
                     }
                 }
@@ -1666,6 +1594,25 @@ const DeepAffexWebResultsData = (() => {
                 "units": "KG_M2",
                 "lowerBound": 10,
                 "upperBound": 60
+            },
+            "HEIGHT": {
+                "key": "HEIGHT",
+                "lowerBound": 100,
+                "upperBound": 220,
+                "units": "CM",
+                "decimalPlaces": 0
+            },
+            "WEIGHT": {
+                "key": "WEIGHT",
+                "lowerBound": 30,
+                "upperBound": 300,
+                "units": "KG",
+                "decimalPlaces": 0
+            },
+            "WAIST_CIRCUM": {
+                "key": "WAIST_CIRCUM",
+                "units": "CM",
+                "decimalPlaces": 0
             },
             "BP_DIASTOLIC": {
                 "units": "MMHG",
@@ -1829,7 +1776,7 @@ const DeepAffexWebResultsData = (() => {
             "zh": "智能健康魔镜"
         },
         "RESULTS_DISCLAIMER": {
-            "default": `These measures are not intended for the treatment, diagnosis, mitigation or cure of any diseases. any thoughts or questions about the results obtained should be discussed with your healthcare provider. This measure is for general awareness and recreational use.`,
+            "default": `Health insights, wellness metrics, and condition likelihood assessments are intended for informational and wellness purposes only. These features are not intended to diagnose, treat, cure, mitigate, monitor, or prevent any disease or medical condition. The information provided by this solution is not a substitute for professional medical advice, diagnosis, or treatment. Users should consult a qualified healthcare professional regarding any medical concerns or healthcare decisions. Some results were predicted using AI/machine learning technology.`,
             "zh": `本产品/服务所提供的测量结果仅供一般健康认知及娱乐性用途参考，并非医疗用途。这些测量结果不构成医疗建议，亦不用于任何疾病的诊断、治疗、缓解、预防或治愈。用户不应依据这些结果作出任何医疗决定。对于测量结果的任何疑问或健康相关问题，用户应咨询具备资质的医疗保健专业人士。`
         },
         "SCREEN_RESULTS_SUBTITLE_VITALS": {
@@ -1853,22 +1800,22 @@ const DeepAffexWebResultsData = (() => {
             "zh": "心理指标"
         },
         "SCREEN_RESULTS_SUBTITLE_GENERALRISKS": {
-            "default": "General Risks",
+            "default": "Cardiovascular Event Likelihood Indices",
             "ko": "보편적 위험",
             "zh": "一般风险"
         },
         "SCREEN_RESULTS_SUBTITLE_OVERALL": {
-            "default": "Overall",
+            "default": "General Wellness Indices",
             "ko": "종합 보고서",
             "zh": "综合评分"
         },
         "SCREEN_RESULTS_SUBTITLE_METABOLICRISKS": {
-            "default": "Metabolic Risks",
+            "default": "Metabolic Biomarker Likelihood Indices",
             "ko": "",
             "zh": "代谢风险"
         },
         "SCREEN_RESULTS_SUBTITLE_BLOODBIOMARKERS": {
-            "default": "Blood Biomarkers",
+            "default": "Blood Biomarkers Likelihood Indices",
             "ko": "",
             "zh": "血液生化标志物"
         },
@@ -2040,50 +1987,58 @@ const DeepAffexWebResultsData = (() => {
             "zh": "腰围"
         },
         "DFXPOINT_TITLE:BP_CVD": {
-            "default": "Cardiovascular Disease Risk",
+            "default": "Cardiovascular Disease Likelihood Index",
             "ko": "심혈관 질환 위험",
             "zh": "心血管疾病风险"
         },
+        "DFXPOINT_TITLE:BP_CVD:OVERALL": {
+            "default": "Cardiovascular Event Likelihood Index",
+            "zh": "心血管事件风险指数"
+        },
         "DFXPOINT_TITLE:BP_HEART_ATTACK": {
-            "default": "Heart Attack Risk",
+            "default": "Heart Attack Likelihood Index",
             "ko": "심장마비 위험",
             "zh": "心脏病风险"
         },
         "DFXPOINT_TITLE:BP_STROKE": {
-            "default": "Stroke Risk",
+            "default": "Stroke Likelihood Index",
             "ko": "뇌졸중 위험",
             "zh": "中风风险"
         },
         "DFXPOINT_TITLE:HPT_RISK_PROB": {
-            "default": "Hypertension Risk",
+            "default": "Hypertension Likelihood Index",
             "zh": "高血压风险"
         },
         "DFXPOINT_TITLE:DBT_RISK_PROB": {
-            "default": "Type 2 Diabetes Risk",
+            "default": "Type 2 Diabetes Likelihood Index",
             "zh": "2型糖尿病风险"
         },
         "DFXPOINT_TITLE:HDLTC_RISK_PROB": {
-            "default": "Hypercholesterolemia Risk",
+            "default": "Hypercholesterolemia Likelihood Index",
             "zh": "高胆固醇血症风险"
         },
         "DFXPOINT_TITLE:TG_RISK_PROB": {
-            "default": "Hypertriglyceridemia Risk",
+            "default": "Hypertriglyceridemia Likelihood Index",
             "zh": "高甘油三酯血症风险"
         },
         "DFXPOINT_TITLE:FLD_RISK_PROB": {
-            "default": "Fatty Liver Disease Risk",
+            "default": "Fatty Liver Disease Likelihood Index",
             "zh": "脂肪肝风险"
         },
         "DFXPOINT_TITLE:OVERALL_METABOLIC_RISK_PROB": {
-            "default": "Overall Metabolic Health Risk",
+            "default": "Overall Metabolic Biomarker Index",
             "zh": "整体代谢健康风险"
         },
+        "DFXPOINT_TITLE:OVERALL_METABOLIC_RISK_PROB:OVERALL": {
+            "default": "Metabolic Biomarker Likelihood Index",
+            "zh": "代谢生物标志物风险指数"
+        },
         "DFXPOINT_TITLE:HBA1C_RISK_PROB": {
-            "default": "Hemoglobin A1C Risk",
+            "default": "Elevated Hemoglobin A1C Likelihood Index",
             "zh": "糖化血红蛋白水平高于5.7%的风险"
         },
         "DFXPOINT_TITLE:MFBG_RISK_PROB": {
-            "default": "Fasting Blood Glucose Risk",
+            "default": "Elevated Fasting Blood Glucose Likelihood Index",
             "zh": "空腹血糖水平高于5.5mmol/L的风险"
         },
         "DFXPOINT_TITLE:HEALTH_SCORE": {
@@ -2092,22 +2047,22 @@ const DeepAffexWebResultsData = (() => {
             "zh": "综合健康评分"
         },
         "DFXPOINT_TITLE:VITAL_SCORE": {
-            "default": "Vitals",
+            "default": "Vitals Index",
             "ko": "활력",
             "zh": "生命体征"
         },
         "DFXPOINT_TITLE:PHYSIO_SCORE": {
-            "default": "Physiological",
+            "default": "Physiological Index",
             "ko": "신진대사(생리학적)",
             "zh": "生理指标"
         },
         "DFXPOINT_TITLE:MENTAL_SCORE": {
-            "default": "Mental",
+            "default": "Mental Index",
             "ko": "스트레스지수",
             "zh": "心理指标"
         },
         "DFXPOINT_TITLE:PHYSICAL_SCORE": {
-            "default": "Physical",
+            "default": "Physical Index",
             "ko": "신체점수",
             "zh": "身体指标"
         },
@@ -2505,6 +2460,41 @@ This risk score considers your gender, age, Body Mass Index, systolic blood pres
             "zh": `中风风险是您在未来10年内首次中风的可能性，以百分比表示。
 
 此风险评分考虑您的性别、年龄、体重指数、收缩压和抗高血压药物状态，以及您的吸烟状态和糖尿病状态（仅限男性）。它是用弗雷明翰方法（Framingham）、基于对参与者心血管健康进行了10年以上的前瞻性研究的数据开发的。`
+        },
+        "DFXPOINT_DESC:VITAL_SCORE": {
+            "default": `Vitals Index is a measure of your cardiovascular health. The index is calculated from the combination of:
+
+- Heart Rate
+- Systolic Blood Pressure
+- Diastolic Blood Pressure
+- Pulse Pressure
+
+These measures are related to arterial stiffness and overall strain on the cardiovascular system. The higher your Vitals Index the better your cardiovascular health.`
+        },
+        "DFXPOINT_DESC:PHYSIO_SCORE": {
+            "default": `Physiological Index is a measure of how efficiently your cardiovascular system is working. The index is calculated from the combination of:
+
+- Heart Rate
+- Systolic Blood Pressure
+- Heart Rate Variability
+
+These measures are related to how hard your heart is working along with the resiliency of your nervous system to maintain a healthy cardiovascular system. The higher the index, the more efficient your cardiovascular system is working.`
+        },
+        "DFXPOINT_DESC:MENTAL_SCORE": {
+            "default": `Mental Stress Index is a snapshot measure of your mental stress based on your facial blood flow. Your facial blood flow pattern is linked to your sympathetic nervous system activity which drives the fight-or-flight response.
+
+The higher the index, the less likely you are to be stressed.
+
+**Notice:** Moment-to-moment fluctuations in the physiological blood flow means that the mental stress index could vary to some degree from one measurement to the next. Therefore, the best estimate of the mental stress index is obtained by averaging several measurements throughout the day and across several days to adequately account for this physiological variation.`
+        },
+        "DFXPOINT_DESC:PHYSICAL_SCORE": {
+            "default": `Physical Index is a measure of your physical attributes. The index is calculated from the combination of:
+
+- Body Mass Index (BMI)
+- Waist-to-Height Ratio
+- Body Shape Index
+
+Your physical attributes contribute to your overall wellbeing. A higher index indicates a healthier physique.`
         },
         "DFXPOINT_DESC:HEALTH_SCORE": {
             "default": `General Wellness Score is a measure of your overall physiological health based on a combined calculation of your most essential vitals including:
