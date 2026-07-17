@@ -2797,14 +2797,50 @@ R (血管阻力) x C (动脉顺应性)。
 
 通常情况下，Tau值高的人比Tau值低的人有更好的血管健康状况。此外，某些活动可导致Tau值立即发生变化 (例如饮酒、吸烟)。`
         },
+        "DFXPOINT_DESC:HEALTH_SCORE": {
+            "default": `General Wellness Score is a measure of your overall physiological health based on a combined calculation of your most essential vitals including:
+
+- Heart rate
+- Stress
+- Blood Pressure
+- Heart Rate Variability
+- Body Mass Index
+- Cardiac Workload
+- Waist-to-height Ratio
+- Body Shape Index
+- Cardiovascular Event Likelihood Index
+
+The higher your General Wellness Score, the better your health.`
+        },
+        "DFXPOINT_DESC:AGE": {
+            "default": `Skin Age is an estimate of your age based on the condition of the surface of your face.
+This estimate can be used as an indicator for subject's facial skin aging. It may be influenced by many factors such as fatigue level, the use of skincare or cosmetics products.
+
+Video images taken in poor lighting conditions (e.g., back-lighting, overhead lighting) may distort the estimation of subject's facial skin age.
+
+There is no interpretation table for AGE`
+        },
+        "DFXPOINT_DESC:HEIGHT": {
+            "default": `*Estimated Height* is an estimate of the subject's height in centimetres.
+
+*There is no interpretation table for HEIGHT.*`
+        },
+        "DFXPOINT_DESC:WEIGHT": {
+            "default": `*Estimated Weight* is an estimate of the subject's weight in kilograms.
+
+*There is no interpretation table for WEIGHT.*`
+        },
+        "DFXPOINT_DESC:WAIST_CIRCUM": {
+            "default": `*Waist Circumference* is the subject's waist circumference in centimetres using the measurement's user profile information. It will be estimated if user profile information is not provided.
+
+*There is no interpretation table for WAIST_CIRCUM.*`
+        },
         "DFXPOINT_DESC:TEMPERATURE_SENSOR": {
-            "default": `The temperature sensor mainly collects the temperature of the facial and neck areas, with priority given to capturing the highest temperature in these regions. During measurement, within the effective detection distance (15-50cm indoors), the module continuously collects temperature data approximately 4 times per second. The final displayed temperature is the highest value among the series of temperatures collected during the measurement process, ensuring accurate temperature measurement.`,
+            "default": `The temperature sensor collects readings from the upper forehead and neck areas. During the facial scan, the sensor will sample skin temperature from these facial regions approximately 4 times per second. The final displayed value represents the maximum temperature detected during the measurement process`,
             "zh": `温度传感器主要采集面部和颈部区域的温度，且优先捕捉该区域最高温；测量时，模块在有效检测距离内（室内 15-50cm），每秒约 4 次连续采集温度数据，最终显示的温度，是测量过程中所采集到的一系列温度中的最高值，保障测温精准。`
         },
         "DFXPOINT_DESC:VITALITY": {
-            "default": `## Definition
-
-*Vitality Index* is a measure of an individual's cardiovascular health and overall vitality, and is presented on a 5-point scale, from poor (Level 1) to excellent (Level 5).
+            "default": `*Vitality Index* is a measure of an individual's cardiovascular health and overall vitality, and is presented on a 5-point scale, from poor (Level 1) to excellent (Level 5).
 
 ## Background
 
@@ -2818,9 +2854,7 @@ R (血管阻力) x C (动脉顺应性)。
 *活力指数*通过整合多项关键生理指标，实现对个体心血管健康及整体活力的综合评估。该指数纳入了心脏负荷这一指标 —— 心脏负荷是衡量心脏耗氧量与承受压力的公认指标，能够反映心脏的泵血效率；同时还纳入了血管容量指标，这一指标可量化血管的适应能力与健康状态，体现血管根据人体血流需求变化进行舒张与收缩的能力。此外，活力指数还结合了身体质量指数、心率变异性及年龄三项因素，这些均是对心血管健康具有重要影响、且能反映人体整体生理健康状态的关键指标。这种多维度评估方法，能够全面展现个体的心血管活力水平，清晰指出其健康优势与潜在隐患。`
         },
         "DFXPOINT_DESC:SLEEP_QUALITY": {
-            "default": `## Definition
-
-*Sleep Quality Index* is a measure of the user's Sleep Quality that quantifies the Sleep Quality level on a 5-point scale, from poor sleep quality (Level 1) to excellent sleep quality (Level 5).
+            "default": `*Sleep Quality Index* is a measure of the user's Sleep Quality that quantifies the Sleep Quality level on a 5-point scale, from poor sleep quality (Level 1) to excellent sleep quality (Level 5).
 
 ## Background
 
@@ -2834,9 +2868,7 @@ R (血管阻力) x C (动脉顺应性)。
 *睡眠质量指数*以心率变异性相关特征为核心基础，具体包括正常窦性心搏间期标准差（SDNN）与相邻正常窦性心搏间期差值大于 50 毫秒的百分比（pNN50）。这两项指标是评估自主神经系统活性的成熟指标，同时也与自主神经系统在睡眠调节中发挥的作用密切相关。除心率变异性指标外，睡眠质量指数还纳入了心率与血压两项测量数据 —— 这两项指标均会受到睡眠阶段与整体睡眠质量的显著影响。通过整合上述参数，睡眠质量指数能够客观反映个体的睡眠状况，其评估依据是已有研究中证实的 "这些生理特征与睡眠质量各维度存在高度相关性" 这一结论。`
         },
         "DFXPOINT_DESC:ANXIETY_INDEX": {
-            "default": `## Definition
-
-*Anxiety Index* is a measure of an individual's underlying, long-range anxiety level and is presented on a 5-point scale, from excellent (Level 1) to poor (Level 5).
+            "default": `*Anxiety Index* is a measure of an individual's underlying, long-range anxiety level and is presented on a 5-point scale, from excellent (Level 1) to poor (Level 5).
 
 ## Background
 

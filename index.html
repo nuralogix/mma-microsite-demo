@@ -40,13 +40,6 @@
             color: var(--text);
         }
 
-        #main-header {
-            text-align: center;
-            color: var(--header-pink);
-            font-weight: 600;
-            margin: 20px 0;
-        }
-
         a {
             color: var(--accent);
         }
@@ -97,14 +90,6 @@
             filter: invert(1);
         }
 
-        /* PNG fallback icons (e.g. HEIGHT, WEIGHT, WAIST_CIRCUM) */
-        .result-icon img.icon-png {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: invert(1);
-        }
-
         .result-icon.fallback {
             font-size: 20px;
             text-align: center;
@@ -145,6 +130,15 @@
         #starsContainer .result-info-icon {
             margin-left: 5px;
             margin-right: 0;
+        }
+
+        .wellness-dial-label .result-info-icon {
+            margin-left: 2px;
+            align-self: flex-start;
+            margin-top: 1px;
+            font-size: 0.38em;
+            width: 12px;
+            height: 12px;
         }
 
         .result-info-icon:hover,
@@ -227,7 +221,10 @@
             color: var(--text);
             font-size: 1.05em;
             letter-spacing: 0.04em;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
         h2 {
@@ -293,24 +290,31 @@
 
         #timestamp {
             color: var(--text-muted);
-            text-align: center;
             font-weight: bold;
+            font-size: 0.9em;
         }
 
         #main-container {
             margin: 1em;
         }
 
+        .info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin: 8px 0 16px;
+        }
+
         #measurementInfo {
-            height: 1.5em;
             align-content: center;
-            text-align: center;
             color: var(--text-muted);
             font-size: 1em;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 1em;
         }
 
         #measurementInfo span+span {
@@ -326,10 +330,9 @@
         #starsContainer {
             padding-left: 0.5em;
             padding-right: 0.5em;
-            display: block;
-            height: max-content;
-            width: max-content;
-            height: 100%;
+            display: flex;
+            align-items: center;
+            height: 1.5em;
             white-space: nowrap;
         }
 
@@ -621,7 +624,6 @@
 
 <body>
     <div id="main-container">
-        <div id="main-header"></div>
         <div id="measurementInfo"></div>
         <div id="timestamp"></div>
         <div id="results-container"></div>

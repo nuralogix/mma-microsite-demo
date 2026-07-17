@@ -71,6 +71,12 @@ function renderResults(results, definitions, sections, pageLocale) {
         renderWellnessDialCard(healthScoreVal, healthScoreDef, container, pageLocale)
     }
 
+    const infoBar = document.createElement('div')
+    infoBar.className = 'info-bar'
+    infoBar.appendChild(measurementInfo)
+    infoBar.appendChild(timestamp)
+    container.appendChild(infoBar)
+
     sections.forEach(section => {
         let titleEl = document.createElement('h2');
         titleEl.textContent = localize(section.titleLocalizationKey, pageLocale);
@@ -519,21 +525,13 @@ function loadSVGIcon(iconElement, iconName) {
             iconElement.innerHTML = svgContent;
         })
         .catch(() => {
-            // Try PNG fallback before showing generic icon
-            const img = document.createElement('img')
-            img.src = `assets/svg/${iconName}.png`
-            img.alt = ''
-            img.className = 'icon-png'
-            img.onerror = () => {
-                iconElement.innerHTML = '●'
-                iconElement.classList.add('fallback')
-            }
-            iconElement.appendChild(img)
+            iconElement.innerHTML = '☆';
+            iconElement.classList.add('fallback');
         });
 }
 
 function shouldShowInfoIcon(pointKey) {
-    return pointKey !== 'AGE' && pointKey !== 'RISKS_SCORE' && pointKey !== 'HEALTH_SCORE';
+    return pointKey !== 'RISKS_SCORE' && pointKey !== 'HEALTH_SCORE';
 }
 
 // Raw values for these points are on a 1–5 scale; display as percent-of-max (value/5*100)
@@ -692,6 +690,13 @@ function renderWellnessDialCard(healthScoreValue, definition, container, locale)
     const labelEl = document.createElement('p')
     labelEl.className = 'wellness-dial-label'
     labelEl.textContent = title
+
+    const infoOpenDialog = () => {
+        const opts = PointInfoDialog.buildPointInfoDialogOptions(definition, val, locale)
+        PointInfoDialog.showPointInfoDialog(opts.title, opts.content, locale)
+    }
+    labelEl.appendChild(PointInfoDialog.createResultInfoIcon(locale, infoOpenDialog))
+
     card.appendChild(labelEl)
 
     container.appendChild(card)
@@ -703,6 +708,7 @@ function renderWellnessDialCard(healthScoreValue, definition, container, locale)
  */
 function renderHeader(lang) {
     let header = document.getElementById('main-header');
+    if (!header) return;
     let title = document.createElement('h1');
     title.textContent = localize("APP_NAME", lang);
     header.appendChild(title);
