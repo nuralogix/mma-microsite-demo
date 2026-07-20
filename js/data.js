@@ -48,6 +48,7 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_PHYSICAL",
             "pointsIDs": [
                 "AGE",
+                "AGE_CVM",
                 "HEIGHT",
                 "WEIGHT",
                 "WAIST_CIRCUM",
@@ -60,6 +61,7 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_GENERALRISKS",
             "pointsIDs": [
                 "BP_CVD",
+                "CVD_MULTI_YEAR_RISK_PROBS",
                 "BP_HEART_ATTACK",
                 "BP_STROKE"
             ]
@@ -942,6 +944,25 @@ const DeepAffexWebResultsData = (() => {
                     }
                 }
             },
+            "CVD_MULTI_YEAR_RISK_PROBS": {
+                "decimalPlaces": 0,
+                "upperBound": 100,
+                "key": "CVD_MULTI_YEAR_RISK_PROBS",
+                "units": "PERCENT",
+                "lowerBound": 0,
+                "hideWhenMissing": true,
+                "scales": {
+                    "default": {
+                        "segments": [
+                            { "min": 0,    "max": 5,   "color": "green"     },
+                            { "min": 5,    "max": 7.25,"color": "lightGreen"},
+                            { "min": 7.25, "max": 10,  "color": "yellow"    },
+                            { "min": 10,   "max": 20,  "color": "lightRed"  },
+                            { "min": 20,   "max": 100, "color": "red"       }
+                        ]
+                    }
+                }
+            },
             "BP_CVD": {
                 "decimalPlaces": 0,
                 "upperBound": 100,
@@ -1025,6 +1046,15 @@ const DeepAffexWebResultsData = (() => {
                 "key": "AGE",
                 "units": "",
                 "lowerBound": 10
+            },
+            "AGE_CVM": {
+                "scales": {},
+                "decimalPlaces": 0,
+                "upperBound": 110,
+                "key": "AGE_CVM",
+                "units": "YEARS",
+                "lowerBound": 18,
+                "hideWhenMissing": true
             },
             "HPT_RISK_PROB_AVG": {
                 "units": "PERCENT",
@@ -1961,6 +1991,10 @@ const DeepAffexWebResultsData = (() => {
             "ko": "피부 나이",
             "zh": "皮肤年龄"
         },
+        "DFXPOINT_TITLE:AGE_CVM": {
+            "default": "Cardiovascular Metabolic Age",
+            "zh": "心血管代谢年龄"
+        },
         "DFXPOINT_TITLE:WAIST_TO_HEIGHT": {
             "default": "Waist-to-Height Ratio",
             "ko": "허리둘레-신장 비율",
@@ -1985,6 +2019,18 @@ const DeepAffexWebResultsData = (() => {
             "default": "Waist Circumference",
             "ko": "허리 둘레",
             "zh": "腰围"
+        },
+        "DFXPOINT_TITLE:CVD_MULTI_YEAR_RISK_PROBS": {
+            "default": "Multi-year Cardiovascular Disease Risk",
+            "zh": "多年心血管疾病风险"
+        },
+        "DFXPOINT_CVD_YEAR_LABEL": {
+            "default": "{year}-year likelihood",
+            "zh": "{year}年风险"
+        },
+        "DFXPOINT_CVD_YEAR_SLIDER_LABEL": {
+            "default": "Cardiovascular disease risk prediction year",
+            "zh": "心血管疾病风险预测年限"
         },
         "DFXPOINT_TITLE:BP_CVD": {
             "default": "Cardiovascular Disease Likelihood Index",
@@ -2797,20 +2843,23 @@ R (血管阻力) x C (动脉顺应性)。
 
 通常情况下，Tau值高的人比Tau值低的人有更好的血管健康状况。此外，某些活动可导致Tau值立即发生变化 (例如饮酒、吸烟)。`
         },
-        "DFXPOINT_DESC:HEALTH_SCORE": {
-            "default": `General Wellness Score is a measure of your overall physiological health based on a combined calculation of your most essential vitals including:
+        "DFXPOINT_DESC:AGE_CVM": {
+            "default": `*Cardiovascular Metabolic Age* is an estimate of the subject's cardiovascular and metabolic health age, calculated using the subject's chronological age and health indicators derived from a facial blood flow (TOI) measurement.
 
-- Heart rate
-- Stress
-- Blood Pressure
-- Heart Rate Variability
-- Body Mass Index
-- Cardiac Workload
-- Waist-to-height Ratio
-- Body Shape Index
-- Cardiovascular Event Likelihood Index
+Cardiovascular Metabolic Age is derived from a formula that combines the subject's chronological age with health indicators estimated from facial blood flow information captured using TOI. This estimate reflects several contributing factors, including cardiovascular disease risk; metabolic health risks such as hypertension, diabetes and pre-diabetes risk, hypercholesterolemia, and hypertriglyceridemia; cardiac health indicators such as cardiac workload and vascular capacity; and demographic information such as Body Mass Index.
 
-The higher your General Wellness Score, the better your health.`
+Cardiovascular Metabolic Age compares the subject's overall cardiovascular and metabolic health with their chronological age. A subject with a healthier lifestyle, lower cardiovascular and metabolic risk, and better cardiac health is more likely to have a Cardiovascular Metabolic Age lower than their chronological age.
+
+*There is no interpretation table for AGE_CVM.*`
+        },
+        "DFXPOINT_DESC:CVD_MULTI_YEAR_RISK_PROBS": {
+            "default": `*Multi-year Cardiovascular Disease Risk* is the subject's likelihood of experiencing their first cardiovascular disease event within a selected time horizon from 1 to 20 years, expressed as a percentage. The result provides the corresponding cardiovascular disease risk for each year. Cardiovascular disease refers to conditions affecting the heart and blood vessels, such as heart attack and stroke. Multi-year Cardiovascular Disease Risk does not apply to subjects who have already had a heart attack or stroke.
+
+## Background
+
+This risk score is based on advanced machine learning and estimates the subject's likelihood of developing cardiovascular disease over a user-selected time window, from 1 year up to 20 years into the future.
+
+Regardless of the selected year, the same interpretation scale applies to the reported result.`
         },
         "DFXPOINT_DESC:AGE": {
             "default": `Skin Age is an estimate of your age based on the condition of the surface of your face.
