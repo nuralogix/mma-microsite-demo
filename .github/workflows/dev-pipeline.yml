@@ -1,0 +1,45 @@
+name: Deploy to Dev S3
+
+on:
+  push:
+    tags:
+      - dev-*
+
+env:
+  AWS_REGION: us-east-1
+  CLOUDFRONT_DISTRIBUTION_ID: E2A9KUSPDYUVIZ
+  CLOUDFRONT_PATH: /nuralogix/result/*
+
+  CN_AWS_REGION: cn-north-1
+  CN_CLOUDFRONT_DISTRIBUTION_ID: E1WENSQR7WE0CB
+  CN_CLOUDFRONT_PATH: /demo/*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to S3 (us-east-1)
+        uses: ./.github/actions/deploy-webapp
+        with:
+          aws-access-key-id: ${{ secrets.INTL_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.INTL_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-role: ${{ secrets.AWS_ROLE }}
+          s3-bucket: ${{ vars.S3_BUCKET }}
+          cloudfront-distribution-id: ${{ env.CLOUDFRONT_DISTRIBUTION_ID }}
+          cloudfront-path: ${{ env.CLOUDFRONT_PATH }}
+
+      - name: Deploy to S3 (cn-north-1)
+        uses: ./.github/actions/deploy-webapp
+        with:
+          aws-access-key-id: ${{ secrets.CN_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CN_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.CN_AWS_REGION }}
+          aws-role: ${{ secrets.CN_AWS_ROLE }}
+          s3-bucket: ${{ vars.CN_S3_BUCKET }}
+          cloudfront-distribution-id: ${{ env.CN_CLOUDFRONT_DISTRIBUTION_ID }}
+          cloudfront-path: ${{ env.CN_CLOUDFRONT_PATH }}
