@@ -71,9 +71,10 @@ function renderResults(results, definitions, sections, pageLocale) {
         container.appendChild(titleEl);
         var numberOfChildren = 0
 
-        for (let i = 0; i < section.pointsIDs.length; i++) {
-            let pointID = section.pointsIDs[i];
-            let nextPointID = section.pointsIDs[i + 1];
+        let pointsIDs = removeDuplicateAgePointIDs(section.pointsIDs);
+        for (let i = 0; i < pointsIDs.length; i++) {
+            let pointID = pointsIDs[i];
+            let nextPointID = pointsIDs[i + 1];
             // Special handling for BP_SYSTOLIC and BP_DIASTOLIC combination
             if (pointID === "BP_SYSTOLIC" && nextPointID === "BP_DIASTOLIC") {
                 renderBloodPressureRow(results, definitions, container, pageLocale);
@@ -82,7 +83,7 @@ function renderResults(results, definitions, sections, pageLocale) {
                 continue;
             }
 
-            let result = getPointResult(pointID, results);
+            let result = getCompatPointResult(pointID, results);
 
             if(pointID === "TEMPERATURE_SENSOR" && (isNaN(result) || result === 0)) {
                 // Fallback to BODY_TEMPERATURE if TEMPERATURE_SENSOR is not available
@@ -90,7 +91,7 @@ function renderResults(results, definitions, sections, pageLocale) {
                 result = getPointResult("BODY_TEMPERATURE", results);
             }
 
-            let pointDefinition = definitions[pointID]
+            let pointDefinition = definitions[getCompatPointID(pointID)]
             if (!pointDefinition) continue;
 
             // Skip rendering if result is not available and point is configured to hide when missing
@@ -98,7 +99,7 @@ function renderResults(results, definitions, sections, pageLocale) {
                 continue;
             }
 
-            renderResultRow(result, definitions[pointID], container, pageLocale);
+            renderResultRow(result, pointDefinition, container, pageLocale);
 
             numberOfChildren += 1;
         }
@@ -111,6 +112,58 @@ function renderResults(results, definitions, sections, pageLocale) {
 
 function getPointResult(pointID, results) {
     return results[convertPointIDStringToHashString(pointID)]
+}
+
+// MMA_CCA replaces AGE with AGE_MMA, while results from older MMA_CC packages still carry AGE.
+const LEGACY_AGE_POINT_ID = "AGE";
+const CURRENT_AGE_POINT_ID = "AGE_MMA";
+
+/**
+ * AGE_MMA keeps the AGE definition, name, icon and description.
+ * @param {string} pointID - The point ID listed in a section.
+ * @returns {string} The point ID whose definition should be used.
+ */
+function getCompatPointID(pointID) {
+    return pointID === CURRENT_AGE_POINT_ID ? LEGACY_AGE_POINT_ID : pointID;
+}
+
+/**
+ * Either age ID shows AGE_MMA when the results have it and falls back to AGE.
+ * Other points are read as-is.
+ * @param {string} pointID - The point ID listed in a section.
+ * @param {Object} results - The decoded results, keyed by point ID hash.
+ * @returns {number|undefined} The result value.
+ */
+function getCompatPointResult(pointID, results) {
+    if (pointID !== LEGACY_AGE_POINT_ID && pointID !== CURRENT_AGE_POINT_ID) {
+        return getPointResult(pointID, results);
+    }
+    let candidates = [CURRENT_AGE_POINT_ID, LEGACY_AGE_POINT_ID];
+    let found = candidates.find(id => {
+        let value = getPointResult(id, results);
+        return value !== undefined && value !== null && !isNaN(value);
+    });
+    return getPointResult(found || pointID, results);
+}
+
+/**
+ * A section listing both AGE and AGE_MMA shows a single age point, at the first one's position.
+ * Sections listing only one of them are unchanged.
+ * @param {Array<string>} pointsIDs - The point IDs listed in a section.
+ * @returns {Array<string>} The point IDs without the duplicate age point.
+ */
+function removeDuplicateAgePointIDs(pointsIDs) {
+    return pointsIDs.filter((pointID, index) => {
+        let counterpart
+        if (pointID === LEGACY_AGE_POINT_ID) {
+            counterpart = CURRENT_AGE_POINT_ID
+        } else if (pointID === CURRENT_AGE_POINT_ID) {
+            counterpart = LEGACY_AGE_POINT_ID
+        } else {
+            return true
+        }
+        return !pointsIDs.slice(0, index).includes(counterpart)
+    })
 }
 
 /**
