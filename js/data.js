@@ -32,6 +32,7 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_PHYSICAL",
             "pointsIDs": [
                 "AGE",
+                "AGE_CVM",
                 "BMI_CALC",
                 "ABSI",
                 "WAIST_TO_HEIGHT"
@@ -41,6 +42,7 @@ const DeepAffexWebResultsData = (() => {
             "titleLocalizationKey": "SCREEN_RESULTS_SUBTITLE_GENERALRISKS",
             "pointsIDs": [
                 "BP_CVD",
+                "CVD_MULTI_YEAR_RISK_PROBS",
                 "BP_HEART_ATTACK",
                 "BP_STROKE"
             ]
@@ -754,6 +756,28 @@ const DeepAffexWebResultsData = (() => {
                 },
                 "key": "WAIST_TO_HEIGHT"
             },
+            "HEIGHT": {
+                "lowerBound": 100,
+                "upperBound": 220,
+                "units": "CM",
+                "decimalPlaces": 0,
+                "key": "HEIGHT",
+                "hideWhenMissing": true
+            },
+            "WEIGHT": {
+                "lowerBound": 30,
+                "upperBound": 300,
+                "units": "KG",
+                "decimalPlaces": 0,
+                "key": "WEIGHT",
+                "hideWhenMissing": true
+            },
+            "WAIST_CIRCUM": {
+                "units": "CM",
+                "decimalPlaces": 0,
+                "key": "WAIST_CIRCUM",
+                "hideWhenMissing": true
+            },
             "HRV_SDNN": {
                 "units": "MILLISECONDS",
                 "decimalPlaces": 1,
@@ -992,6 +1016,45 @@ const DeepAffexWebResultsData = (() => {
                     }
                 }
             },
+            "CVD_MULTI_YEAR_RISK_PROBS": {
+                "decimalPlaces": 0,
+                "upperBound": 100,
+                "key": "CVD_MULTI_YEAR_RISK_PROBS",
+                "units": "PERCENT",
+                "lowerBound": 0,
+                "hideWhenMissing": true,
+                "scales": {
+                    "default": {
+                        "segments": [
+                            {
+                                "min": 0,
+                                "color": "green",
+                                "max": 5
+                            },
+                            {
+                                "color": "lightGreen",
+                                "min": 5,
+                                "max": 7.25
+                            },
+                            {
+                                "max": 10,
+                                "color": "yellow",
+                                "min": 7.25
+                            },
+                            {
+                                "min": 10,
+                                "color": "lightRed",
+                                "max": 20
+                            },
+                            {
+                                "color": "red",
+                                "min": 20,
+                                "max": 100
+                            }
+                        ]
+                    }
+                }
+            },
             "TEMPERATURE_SENSOR": {
                 "scales": {
                     "default": {
@@ -1037,6 +1100,15 @@ const DeepAffexWebResultsData = (() => {
                 "key": "AGE",
                 "units": "",
                 "lowerBound": 10
+            },
+            "AGE_CVM": {
+                "scales": {},
+                "decimalPlaces": 0,
+                "upperBound": 110,
+                "key": "AGE_CVM",
+                "units": "YEARS",
+                "lowerBound": 18,
+                "hideWhenMissing": true
             },
             "HPT_RISK_PROB_AVG": {
                 "units": "PERCENT",
@@ -2014,6 +2086,10 @@ const DeepAffexWebResultsData = (() => {
             "ko": "피부 나이",
             "zh": "皮肤年龄"
         },
+        "DFXPOINT_TITLE:AGE_CVM": {
+            "default": "Cardiovascular Metabolic Age",
+            "zh": "心血管代谢年龄"
+        },
         "DFXPOINT_TITLE:WAIST_TO_HEIGHT": {
             "default": "Waist-to-Height Ratio",
             "ko": "허리둘레-신장 비율",
@@ -2043,6 +2119,18 @@ const DeepAffexWebResultsData = (() => {
             "default": "Cardiovascular Disease Risk",
             "ko": "심혈관 질환 위험",
             "zh": "心血管疾病风险"
+        },
+        "DFXPOINT_TITLE:CVD_MULTI_YEAR_RISK_PROBS": {
+            "default": "Multi-year Cardiovascular Disease Risk",
+            "zh": "多年心血管疾病风险"
+        },
+        "DFXPOINT_CVD_YEAR_LABEL": {
+            "default": "{year}-year likelihood",
+            "zh": "{year}年风险"
+        },
+        "DFXPOINT_CVD_YEAR_SLIDER_LABEL": {
+            "default": "Cardiovascular disease risk prediction year",
+            "zh": "心血管疾病风险预测年限"
         },
         "DFXPOINT_TITLE:BP_HEART_ATTACK": {
             "default": "Heart Attack Risk",
@@ -2467,6 +2555,66 @@ Video images taken in poor lighting conditions (e.g., backlighting, overhead lig
 
 在不好的照明条件下拍摄的视频图像 (例如背光、头顶照明) 可能会严重影响皮肤年龄的评估。`
         },
+        "DFXPOINT_DESC:AGE_CVM": {
+            "default": `## Definition
+
+*Cardiovascular Metabolic Age* is an estimate of the subject's cardiovascular and metabolic health age, calculated using the subject's chronological age and health indicators derived from a facial blood flow (TOI) measurement.
+
+## Background
+
+Cardiovascular Metabolic Age is derived from a formula that combines the subject's chronological age with health indicators estimated from facial blood flow information captured using TOI. This estimate reflects several contributing factors, including cardiovascular disease risk; metabolic health risks such as hypertension, diabetes and pre-diabetes risk, hypercholesterolemia, and hypertriglyceridemia; cardiac health indicators such as cardiac workload and vascular capacity; and demographic information such as Body Mass Index.
+
+Cardiovascular Metabolic Age compares the subject's overall cardiovascular and metabolic health with their chronological age. A subject with a healthier lifestyle, lower cardiovascular and metabolic risk, and better cardiac health is more likely to have a Cardiovascular Metabolic Age lower than their chronological age. A subject with higher cardiovascular and metabolic risk and poorer cardiac health may have a Cardiovascular Metabolic Age higher than their chronological age.
+
+*There is no interpretation table for AGE_CVM.*`,
+            "zh": `## 定义
+
+*心血管代谢年龄*是对受试者心血管与代谢健康年龄的估算。该指标结合受试者的实际年龄，以及从面部血流（TOI）测量中获得的健康指标计算得出。
+
+## 背景
+
+心血管代谢年龄通过公式将受试者的实际年龄与 TOI 面部血流信息估算出的健康指标相结合。影响因素包括心血管疾病风险；高血压、糖尿病及糖尿病前期、高胆固醇血症和高甘油三酯血症等代谢健康风险；心脏负荷与血管容量等心脏健康指标；以及身体质量指数等人口统计信息。
+
+心血管代谢年龄用于比较受试者的整体心血管和代谢健康状况与实际年龄。生活方式更健康、心血管及代谢风险更低且心脏健康状况更好的受试者，其心血管代谢年龄更可能低于实际年龄；反之，相关风险较高、心脏健康状况较差的受试者，其心血管代谢年龄可能高于实际年龄。
+
+*AGE_CVM 没有解读表。*`
+        },
+        "DFXPOINT_DESC:HEIGHT": {
+            "default": `## Definition
+
+*Estimated Height* is an estimate of the subject's height in centimetres.
+
+*There is no interpretation table for HEIGHT.*`,
+            "zh": `## 定义
+
+*预测身高*是对受试者身高的估算值，单位为厘米。
+
+*HEIGHT 没有解读表。*`
+        },
+        "DFXPOINT_DESC:WEIGHT": {
+            "default": `## Definition
+
+*Estimated Weight* is an estimate of the subject's weight in kilograms.
+
+*There is no interpretation table for WEIGHT.*`,
+            "zh": `## 定义
+
+*预测体重*是对受试者体重的估算值，单位为千克。
+
+*WEIGHT 没有解读表。*`
+        },
+        "DFXPOINT_DESC:WAIST_CIRCUM": {
+            "default": `## Definition
+
+*Waist Circumference* is the subject's waist circumference in centimetres using the measurement's user profile information. It will be estimated if user profile information is not provided.
+
+*There is no interpretation table for WAIST_CIRCUM.*`,
+            "zh": `## 定义
+
+*腰围*是使用本次测量的用户资料计算出的受试者腰围，单位为厘米。如果未提供用户资料时将对腰围进行估算。
+
+*WAIST_CIRCUM 没有解读表。*`
+        },
         "DFXPOINT_DESC:CARDIACWORKLOAD": {
             "default": `Cardiac Workload, or more precisely myocardial workload, is a measure of the stress put on the heart muscle.
 
@@ -2489,6 +2637,26 @@ This risk score considers your gender, age, Body Mass Index, systolic blood pres
             "zh": `心血管疾病风险是指您在未来10年内发生第一次心脏病发作或中风的可能性，以百分比表示。
 
 此风险评估包含对您的性别、年龄、体重指数、收缩压和使用抗高血压药物状况的考量，以及您的吸烟状况和糖尿病状况（如有）。它是用弗雷明翰方法（Framingham）、基于对参与者心血管健康进行了10年以上的前瞻性研究的数据开发的。`
+        },
+        "DFXPOINT_DESC:CVD_MULTI_YEAR_RISK_PROBS": {
+            "default": `## Definition
+
+*Multi-year Cardiovascular Disease Risk* is the subject's likelihood of experiencing their first cardiovascular disease event within a selected time horizon from 1 to 20 years, expressed as a percentage. The result provides the corresponding cardiovascular disease risk for each year. Cardiovascular disease refers to conditions affecting the heart and blood vessels, such as heart attack and stroke. Multi-year Cardiovascular Disease Risk does not apply to subjects who have already had a heart attack or stroke.
+
+## Background
+
+This risk score is based on advanced machine learning and estimates the subject's likelihood of developing cardiovascular disease over a user-selected time window, from 1 year up to 20 years into the future.
+
+Regardless of the selected year, the same interpretation scale applies to the reported result.`,
+            "zh": `## 定义
+
+*多年心血管疾病风险*是指受试者在所选的 1 至 20 年时间范围内首次发生心血管疾病事件的可能性，以百分比表示。结果提供每一年对应的心血管疾病风险。心血管疾病是指影响心脏和血管的疾病，例如心脏病发作和中风。多年心血管疾病风险不适用于已经发生过心脏病发作或中风的受试者。
+
+## 背景
+
+该风险评分基于先进的机器学习技术，用于估算受试者在用户选择的时间范围内发生心血管疾病的可能性，预测期可从未来 1 年延伸至未来 20 年。
+
+无论选择哪一年，报告结果均使用同一套解读量表。`
         },
         "DFXPOINT_DESC:HEART_ATTACK_RISK": {
             "default": `Heart Attack Risk is your likelihood of experiencing your first heart attack within the next 10 years, expressed as a percentage.
